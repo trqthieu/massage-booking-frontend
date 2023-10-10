@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://movie-server-jet.vercel.app',
+  baseURL: 'http://192.168.149.1:8080',
 });
 axiosClient.interceptors.request.use(
   config => {

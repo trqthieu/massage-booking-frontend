@@ -5,11 +5,11 @@ import request from '../../api/request';
 import moment from 'moment';
 import FileBase64 from 'react-file-base64';
 import { useNavigate, useParams } from 'react-router-dom';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function CreateMovie() {
   const params = useParams();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { movieId } = params;
   const [categoryList, setCategoryList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
@@ -39,9 +39,9 @@ function CreateMovie() {
     ageLimit: 0,
     image: null,
     description: '',
+    primaryThumbnail: '',
   });
   console.log('movieData', movieData);
-
 
   const getMovieInfo = async movieId => {
     const resultMovie = await request.getMovieById(movieId);
@@ -57,6 +57,7 @@ function CreateMovie() {
       ageLimit,
       image,
       description,
+      primaryThumbnail,
     } = resultMovie.data[0];
     const { id: category_id } = resultCategory.data[0];
     setMovieData({
@@ -71,6 +72,7 @@ function CreateMovie() {
       ageLimit,
       image,
       description,
+      primaryThumbnail,
     });
   };
 
@@ -85,23 +87,21 @@ function CreateMovie() {
     if (movieId) {
       const newMovieData = { id: movieId, ...movieData };
       const result = await request.updateMovie(newMovieData);
-      const response=result.data
-      if(response.success)
-      {
+      const response = result.data;
+      if (response.success) {
         toast.success(response.data.message, {
-            autoClose: 2000,
-          });
-          navigate('/admin/movies');    
+          autoClose: 2000,
+        });
+        navigate('/admin/movies');
       }
     } else {
       const result = await request.createMovie(movieData);
-      const response=result.data
-      if(response.success)
-      {
+      const response = result.data;
+      if (response.success) {
         toast.success(response.data.message, {
-            autoClose: 2000,
-          });
-          navigate('/admin/movies');    
+          autoClose: 2000,
+        });
+        navigate('/admin/movies');
       }
     }
   };
@@ -208,7 +208,7 @@ function CreateMovie() {
               </div>
               <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Ngày chiếu</labe>
+                  <labe>Ngày công chiếu</labe>
                 </div>
                 <div className='col-sm-4'>
                   <input
@@ -332,6 +332,23 @@ function CreateMovie() {
                     // value={movieData.image}
                     onChange={e => handleChange('image', e.target.files[0])}
                   /> */}
+                </div>
+              </div>
+              <div className='row' style={{ marginBottom: '15px' }}>
+                <div className='col-sm-2' style={{ marginLeft: '150px' }}>
+                  <labe>Video giới thiệu</labe>
+                </div>
+                <div className='col-sm-4'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    name='primaryThumbnail'
+                    required
+                    value={movieData.primaryThumbnail}
+                    onChange={e =>
+                      handleChange('primaryThumbnail', e.target.value)
+                    }
+                  />
                 </div>
               </div>
               <div className='row' style={{ marginBottom: '15px' }}>

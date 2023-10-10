@@ -7,10 +7,12 @@ import Cinema from './pages/admin/Cinema';
 import CreateCinema from './pages/admin/CreateCinema';
 import CreateEmployee from './pages/admin/CreateEmployee';
 import CreateMovie from './pages/admin/CreateMovie';
+import CreateNews from './pages/admin/CreateNews';
 import CreateProduct from './pages/admin/CreateProduct';
 import CreateSchedule from './pages/admin/CreateSchedule';
 import Employee from './pages/admin/Employee';
 import Movie from './pages/admin/Movie';
+import News from './pages/admin/News';
 import Product from './pages/admin/Product';
 import Report from './pages/admin/Report';
 import Schedule from './pages/admin/Schedule';
@@ -32,7 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
-      <ToastContainer />
+        <ToastContainer />
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -52,13 +54,19 @@ function App() {
           <Route path='/admin/employees/:empId' element={<CreateEmployee />} />
           <Route path='/admin/products' element={<Product />} />
           <Route path='/admin/products/create' element={<CreateProduct />} />
-          <Route path='/admin/products/:productId' element={<CreateProduct />} />
+          <Route
+            path='/admin/products/:productId'
+            element={<CreateProduct />}
+          />
           <Route path='/admin/schedules' element={<Schedule />} />
           <Route path='/admin/schedules/create' element={<CreateSchedule />} />
           <Route
             path='/admin/schedules/:scheduleId'
             element={<CreateSchedule />}
           />
+          <Route path='/admin/news' element={<News />} />
+          <Route path='/admin/news/create' element={<CreateNews />} />
+          <Route path='/admin/news/:newsId' element={<CreateNews />} />
           <Route path='/admin/reports' element={<Report />} />
           <Route path='/booking/:movieId' element={<Booking />} />
           <Route path='/booking-chair/:scheduleId' element={<BookingChair />} />

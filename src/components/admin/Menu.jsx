@@ -164,6 +164,30 @@ function Menu() {
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
+                  Quản lý tin tức
+                  <i className='right fas fa-angle-left' />
+                </p>
+              </Link>{' '}
+              {/* trong 1 <li> co a va ul */}
+              <ul className='nav nav-treeview'>
+                <li className='nav-item'>
+                  <Link to='/admin/news' className='nav-link '>
+                    <i className='far fa-circle nav-icon' />
+                    <p>Danh sách tin tức</p>
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link to='/admin/news/create' className='nav-link'>
+                    <i className='far fa-circle nav-icon' />
+                    <p>Thêm mới tin tức</p>
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li className='nav-item has-treeview' id='menu-movie'>
+              <Link to='#' className='nav-link active'>
+                <i className='nav-icon fas fa-tachometer-alt' />
+                <p>
                   Quản lý sản phẩm
                   <i className='right fas fa-angle-left' />
                 </p>

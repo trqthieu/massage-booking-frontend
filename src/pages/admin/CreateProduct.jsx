@@ -13,8 +13,9 @@ function CreateProduct() {
   const [productData, setProductData] = useState({
     name: '',
     price: 0,
-    image:'',
+    image: '',
   });
+  console.log('productData', productData);
 
   const handleChange = (name, value) => {
     const newProductData = { ...productData };
@@ -30,7 +31,7 @@ function CreateProduct() {
       });
       return;
     }
-    
+
     if (!productData.price > 0) {
       toast.error('Giá phải lớn hơn 0', {
         autoClose: 2000,
@@ -67,9 +68,11 @@ function CreateProduct() {
 
   const getProductInfo = async productId => {
     const resultProduct = await request.getProductById(productId);
-    const { name,price,image} = resultProduct.data[0];
+    const { name, price, image } = resultProduct.data[0];
     setProductData({
-      name,price,image
+      name,
+      price,
+      image,
     });
   };
 
@@ -134,7 +137,7 @@ function CreateProduct() {
                     type='text'
                     className='form-control'
                     path='fullName'
-                    value={productData.fullName}
+                    value={productData.name}
                     onChange={e => handleChange('name', e.target.value)}
                   />
                 </div>

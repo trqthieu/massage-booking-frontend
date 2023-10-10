@@ -163,7 +163,7 @@ const request = {
     return axiosClient.get('/auth/information');
   },
   updateMyInfo(user) {
-    return axiosClient.put('/auth/information',user);
+    return axiosClient.put('/auth/information', user);
   },
   getMyTickets() {
     return axiosClient.get('/auth/myTickets');
@@ -175,7 +175,7 @@ const request = {
     return axiosClient.post('/products', product);
   },
   getProductById(productId) {
-    return axiosClient.get(`/product/${productId}`);
+    return axiosClient.get(`/products/${productId}`);
   },
   updateProduct(product) {
     return axiosClient.put('/products', product);
@@ -184,6 +184,25 @@ const request = {
     return axiosClient.delete('/products', {
       data: {
         id: productId,
+      },
+    });
+  },
+  getNews() {
+    return axiosClient.get('/news');
+  },
+  createNews(news) {
+    return axiosClient.post('/news', news);
+  },
+  getNewsById(newsId) {
+    return axiosClient.get(`/news/${newsId}`);
+  },
+  updateNews(news) {
+    return axiosClient.put('/news', news);
+  },
+  deleteNews(newsId) {
+    return axiosClient.delete('/news', {
+      data: {
+        id: newsId,
       },
     });
   },
