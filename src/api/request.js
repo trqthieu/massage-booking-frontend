@@ -162,6 +162,9 @@ const request = {
   getMyInfo() {
     return axiosClient.get('/auth/information');
   },
+  confirmPassword(data) {
+    return axiosClient.post('/auth/confirmPassword', data);
+  },
   updateMyInfo(user) {
     return axiosClient.put('/auth/information', user);
   },

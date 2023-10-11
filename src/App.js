@@ -27,6 +27,7 @@ import Register from './pages/Register';
 import Booking from './pages/user/Booking';
 import BookingChair from './pages/user/BookingChair';
 import History from './pages/user/History';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const { currentUser } = useSelector(state => state.auth);
@@ -72,6 +73,7 @@ function App() {
           <Route path='/booking-chair/:scheduleId' element={<BookingChair />} />
           <Route path='/history' element={<History />} />
           <Route path='/tickets' element={<TicketList />} />
+          <Route path='/auth/forgot-password' element={<ForgotPassword />} />
           <Route path='*' element={<Navigate to='/movies' replace />} />
         </Routes>
       </div>
