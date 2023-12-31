@@ -15,17 +15,17 @@ import {
   Bar,
 } from 'recharts';
 function Report() {
-    const dataFormater = (number) => {
-        if(number > 1000000000){
-          return (number/1000000000).toString() + 'B';
-        }else if(number > 1000000){
-          return (number/1000000).toString() + 'M';
-        }else if(number > 1000){
-          return (number/1000).toString() + 'K';
-        }else{
-          return number.toString();
-        }
-      }
+  const dataFormater = number => {
+    if (number > 1000000000) {
+      return (number / 1000000000).toString() + 'B';
+    } else if (number > 1000000) {
+      return (number / 1000000).toString() + 'M';
+    } else if (number > 1000) {
+      return (number / 1000).toString() + 'K';
+    } else {
+      return number.toString();
+    }
+  };
   const [movies, setMovies] = useState([]);
   const [reportData, setReportData] = useState([]);
   const [data, setData] = useState({
@@ -48,7 +48,7 @@ function Report() {
     const response = result.data.map(item => {
       return {
         ...item,
-        created_date: moment(item.created_date).format('DD-MM'),
+        created_date: moment(item.date_only).format('DD-MM-YYYY'),
       };
     });
     setReportData(response);
@@ -175,10 +175,15 @@ function Report() {
             <BarChart width={800} height={250} data={reportData}>
               <CartesianGrid strokeDasharray='3 3' />
               <XAxis dataKey='created_date' />
-              <YAxis tickFormatter={dataFormater}/>
-              <Tooltip formatter={dataFormater}/>
+              <YAxis tickFormatter={dataFormater} />
+              <Tooltip formatter={dataFormater} />
               <Legend />
-              <Bar barSize={50} dataKey='value' fill='#82ca9d' name='Doanh thu' />
+              <Bar
+                barSize={50}
+                dataKey='total_value'
+                fill='#82ca9d'
+                name='Doanh thu'
+              />
               {/* <BarChart dataKey='value' fill='#82ca9d' /> */}
             </BarChart>
           </div>
