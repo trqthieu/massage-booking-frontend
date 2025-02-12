@@ -8,12 +8,14 @@ import moment from 'moment';
 import FileBase64 from 'react-file-base64';
 import { toast } from 'react-toastify';
 function Information() {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   const [myInfo, setMyInfo] = useState();
-  const [isUpdate,setIsUpdate]=useState(false)
+  console.log('🚀 ~ Information ~ myInfo:', myInfo);
+  const [isUpdate, setIsUpdate] = useState(false);
   const getMyInformation = async () => {
     const result = await request.getMyInfo();
-    setMyInfo(result.data[0]);
+    console.log('🚀 ~ getMyInformation ~ result:', result);
+    setMyInfo(result.data);
   };
 
   const handleChange = (name, value) => {
@@ -21,20 +23,20 @@ function Information() {
     newData[name] = value;
     setMyInfo(newData);
   };
-  const handleUpdate=async (e)=>{
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const result = await request.updateMyInfo(myInfo);
-      const response=result.data
-      if(response.success)
-      {
-        toast.success(response.data.message, {
-            autoClose: 2000,
-          });
-          setTimeout(()=>{
-            window.location.reload();
-          },500)
-      }
-  }
+    const response = result.data;
+    console.log('🚀 ~ handleUpdate ~ response:', response);
+    // if (response.success) {
+    toast.success('Success', {
+      autoClose: 2000,
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+    // }
+  };
   useEffect(() => {
     getMyInformation();
   }, []);
@@ -43,24 +45,24 @@ function Information() {
     <div>
       <Navbar />
       {myInfo && (
-        <div className='container'>
-          <div id='alert' className='alert alert-warning hidden'>
+        <div className="container">
+          <div id="alert" className="alert alert-warning hidden">
             <strong>Warning!</strong> Không thể cập nhật thông tin cá nhân.
           </div>
-          <h3>Ảnh đại diện</h3>
-          <div className='avatar-container'>
+          {/* <h3>Ảnh đại diện</h3>
+          <div className="avatar-container">
             <div>
               <img
                 src={myInfo.avatar || '/static/images/avatar.png'}
-                alt='Avatar'
-                className='avatar'
+                alt="Avatar"
+                className="avatar"
               />
             </div>
-          </div>
-          <div className={`details-container ${isUpdate ? 'hidden':''}`}>
+          </div> */}
+          <div className={`details-container ${isUpdate ? 'hidden' : ''}`}>
             <h3>Thông tin tài khoản</h3>
-            <div className='row'>
-              <div className='col-sm-3'>
+            <div className="row">
+              <div className="col-sm-3">
                 <ul>
                   <li>
                     <b>Họ và tên:</b>
@@ -68,85 +70,87 @@ function Information() {
                   <li>
                     <b>Email:</b>
                   </li>
-                  <li>
+                  {/* <li>
                     <b>Ngày sinh:</b>
-                  </li>
+                  </li> */}
                   {/* <li>
                     <b>Giới tính</b>
                   </li> */}
-                  <li>
+                  {/* <li>
                     <b>Địa chỉ:</b>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
-              <div className='col-sm-5'>
+              <div className="col-sm-5">
                 <ul>
                   <li>{myInfo.fullName}</li>
                   <li>{myInfo.email}</li>
-                  <li>
+                  {/* <li>
                     {myInfo.dateOfBirth
                       ? moment(myInfo.dateOfBirth).format('DD-MM-YYYY')
                       : 'Chưa có'}
-                  </li>
+                  </li> */}
                   {/* <li>{myInfo.gender === 1 ? 'Nam' : 'Nữ'}</li> */}
-                  <li>{myInfo.phone}</li>
-                  <li>{myInfo.address}</li>
+                  {/* <li>{myInfo.phone}</li>
+                  <li>{myInfo.address}</li> */}
                 </ul>
               </div>
             </div>
             <button
-              type='button'
-              className='btn btn-primary'
-              id='edit-information'
-              onClick={()=>setIsUpdate(true)}
+              type="button"
+              className="btn btn-primary"
+              id="edit-information"
+              onClick={() => setIsUpdate(true)}
             >
               Sửa thông tin
             </button>
           </div>
-          <div className={`update-information ${!isUpdate ? 'hidden':''}`}>
-            <h3>Cập nhật tài khoản</h3>
-            <form method='post' action='/information' onSubmit={handleUpdate}>
-              <div className='row'>
-                <div className='col-sm-3'>
+          <div className={`update-information ${!isUpdate ? 'hidden' : ''}`}>
+            <h3>Update information</h3>
+            <form method="post" action="/information" onSubmit={handleUpdate}>
+              <div className="row">
+                <div className="col-sm-3">
                   <ul>
                     <li>
-                      <label>Họ và tên:</label>
+                      <label>Full Name:</label>
                     </li>
-                    <li>
+                    {/* <li>
                       <label>Email:</label>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <label>Ngày sinh:</label>
                     </li>
                     <li>
                       <label>Địa chỉ</label>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <label>Ảnh đại diện</label>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
-                <div className='col-sm-4'>
+                <div className="col-sm-4">
                   <ul>
                     <li>
                       <input
-                        type='text'
-                        name='fullName'
+                        type="text"
+                        name="fullName"
                         required
                         value={myInfo.fullName}
-                        onChange={(e)=>handleChange('fullName',e.target.value)}
+                        onChange={(e) =>
+                          handleChange('fullName', e.target.value)
+                        }
                       />
                     </li>
-                    <li>
+                    {/* <li>
                       <input
-                        type='text'
+                        type="text"
                         value={myInfo.email}
-                        onChange={(e)=>handleChange('email',e.target.value)}
-                        name='username'
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        name="username"
                         readOnly
                       />
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <input
                         type='date'
                         value={moment(myInfo.dateOfBirth).format('YYYY-MM-DD')}
@@ -171,16 +175,16 @@ function Information() {
                       setMyInfo({ ...myInfo, avatar: base64 });
                     }}
                   />
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
               <button
-                type='submit'
-                className='btn btn-primary'
-                id='update-information'
+                type="submit"
+                className="btn btn-primary"
+                id="update-information"
               >
-                Cập nhật thông tin
+                Update
               </button>
             </form>
           </div>

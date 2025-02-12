@@ -12,22 +12,21 @@ function News() {
   const navigate = useNavigate();
   const mdParser = new MarkdownIt();
   const [newsList, setNewsList] = useState([]);
-  const [movieData, setMovieData] = useState();
   const [currentNews, setCurrentNews] = useState({
-    id: null,
+    _id: null,
     movie_id: null,
   });
   console.log('currentNews', currentNews);
-  console.log('movieData', movieData);
+
   const handleDelete = async () => {
-    const result = await request.deleteNews(currentNews.id);
+    const result = await request.deleteNews(currentNews._id);
     const response = result.data;
-    if (response.success) {
-      toast.success(response.data.message, {
-        autoClose: 2000,
-      });
-      getNews();
-    }
+    // if (response.success) {
+    toast.success('Success', {
+      autoClose: 2000,
+    });
+    getNews();
+    // }
   };
 
   const getNews = async () => {
@@ -36,135 +35,111 @@ function News() {
     setCurrentNews(result.data[0]);
   };
 
-  const getMovieData = async movieId => {
-    const result = await request.getMovieById(movieId);
-    setMovieData(result.data[0]);
-  };
-
   useEffect(() => {
     getNews();
   }, []);
 
-  useEffect(() => {
-    getMovieData(currentNews.movie_id);
-  }, [currentNews.id, currentNews.movie_id]);
-
   return (
-    <div className='wrapper'>
+    <div className="wrapper">
       <Nav />
       <Menu />
-      <div className='content-wrapper'>
-        <div className='content-header'>
-          <div className='container-fluid'>
-            <div className='row mb-2'>
-              <div className='col-sm-6'></div>
-              <div className='col-sm-6'>
-                <ol className='breadcrumb float-sm-right'>
-                  <li className='breadcrumb-item'>
-                    <a href='/admin'>Home</a>
+      <div className="content-wrapper">
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6"></div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="/admin">Home</a>
                   </li>
-                  <li className='breadcrumb-item active'>Danh sách tin tức</li>
+                  <li className="breadcrumb-item active">Blogs List</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
         {/* Main content */}
-        <section className='content'>
-          <div className='container'>
+        <section className="content">
+          <div className="container">
             {/* Content */}
-            <div className='row'>
-              <div className='col-sm-3'>
-                <div className='list-group movie-list'>
-                  {newsList.map(news => {
-                    return (
-                      <Link
-                        to='#'
-                        key={news.id}
-                        onClick={() => setCurrentNews(news)}
-                        className='list-group-item'
-                        style={{
-                          maxLines: 2,
-                        }}
-                      >
-                        {news?.title}
-                      </Link>
-                    );
-                  })}
+            <div className="row">
+              <div className="col-sm-3">
+                <div className="list-group news-list">
+                  {newsList.map((news) => (
+                    <Link
+                      to="#"
+                      key={news._id}
+                      onClick={() => setCurrentNews(news)}
+                      className="list-group-item"
+                      style={{ maxLines: 2 }}
+                    >
+                      {news?.title} / {news?.author}
+                    </Link>
+                  ))}
                 </div>
               </div>
-              <div className='col-sm-9'>
+              <div className="col-sm-9">
+                {/* Modal */}
                 <div
-                  className='modal fade'
-                  id='exampleModal'
+                  className="modal fade"
+                  id="exampleModal"
                   tabIndex={-1}
-                  role='dialog'
-                  aria-labelledby='exampleModalLabel'
-                  aria-hidden='true'
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
                 >
-                  <div className='modal-dialog' role='document'>
-                    <div className='modal-content'>
-                      <div className='modal-header'>
-                        <h5 className='modal-title' id='exampleModalLabel'>
-                          Xác nhận
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">
+                          Confirmation
                         </h5>
                         <button
-                          type='button'
-                          className='close'
-                          data-dismiss='modal'
-                          aria-label='Close'
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
                         >
-                          <span aria-hidden='true'>×</span>
+                          <span aria-hidden="true">×</span>
                         </button>
                       </div>
-                      <div className='modal-body'>
-                        Bạn muốn xóa tin tức này?
+                      <div className="modal-body">
+                        Do you want to delete this news?
                       </div>
-                      <div className='modal-footer'>
+                      <div className="modal-footer">
                         <button
-                          type='button'
-                          className='btn btn-secondary'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
                         >
-                          Đóng
+                          Close
                         </button>
                         <button
-                          type='button'
-                          className='btn btn-danger'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-danger"
+                          data-dismiss="modal"
                           onClick={handleDelete}
                         >
-                          Xóa
+                          Delete
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* <c:foreach var='movie' items='${movies}'> */}
                 {currentNews && (
-                  <div className='info-movie' id='info-movie-${movie.id}'>
+                  <div
+                    className="info-news"
+                    id={`info-news-${currentNews._id}`}
+                  >
                     <div
-                      id='detail-movie-${movie.id}'
+                      id={`detail-news-${currentNews._id}`}
                       style={{ marginLeft: '150px' }}
                     >
                       <h5>{currentNews.title}</h5>
                       <br />
                       <br />
-                      {movieData?.primaryThumbnail &&
-                        currentNews?.type === 'VIDEO' && (
-                          <div>
-                            <YouTube
-                              videoId={movieData?.primaryThumbnail}
-                              opts={{
-                                height: '390',
-                                width: '100%',
-                                playerVars: {
-                                  autoplay: 1, // Auto-play the video
-                                },
-                              }}
-                            />
-                          </div>
-                        )}
+                      {/* If there's a video or additional media, add it here */}
                       {currentNews.content && (
                         <div
                           dangerouslySetInnerHTML={{
@@ -174,32 +149,30 @@ function News() {
                             maxWidth: '100%', // Set a maximum width for the container
                             overflowX: 'auto', // Add horizontal scrolling if necessary
                           }}
-                          className='markdown-content'
+                          className="markdown-content"
                         ></div>
                       )}
                       <br />
                       <br />
-                      <Link to={`/admin/news/${currentNews.id}`}>
+                      <Link to={`/admin/blogs/${currentNews._id}`}>
                         <button
-                          type='button'
-                          className='btn btn-primary btn-update-movie'
+                          type="button"
+                          className="btn btn-primary btn-update-news"
                         >
-                          Cập nhật
+                          Update
                         </button>
                       </Link>
                       <button
-                        type='button'
-                        data-toggle='modal'
-                        data-target='#exampleModal'
-                        data-movie-id='${movie.id}'
-                        className='btn btn-danger movie-delete-action'
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        className="btn btn-danger news-delete-action"
                       >
-                        Xóa tin tức
+                        Delete Blog
                       </button>
                     </div>
                   </div>
                 )}
-                {/* </c:foreach> */}
               </div>
             </div>
             {/* End Content */}

@@ -50,7 +50,7 @@ function Navbar() {
               <span className='sub-nav-toggle plus'></span>
               <Link to='/admin'>Quản lý</Link>
             </li> */}
-            {currentUser?.role === 'ADMIN' && (
+            {currentUser?.role === 'admin' && (
               <li>
                 <span className='sub-nav-toggle plus'></span>
                 <a href='/admin/movies'>Quản lý</a>
@@ -62,13 +62,13 @@ function Navbar() {
                 <Link to='/information'>Cá nhân</Link>
               </li>
             )}
-            {currentUser?.role === 'USER' && (
+            {currentUser?.role === 'user' && (
               <li>
                 <span className='sub-nav-toggle plus'></span>
                 <Link to='/history'>Lịch sử</Link>
               </li>
             )}
-            {currentUser?.role === 'EMP' && (
+            {currentUser?.role === 'expert' && (
               <li>
                 <span className='sub-nav-toggle plus'></span>
                 <Link to='/tickets'>In vé</Link>

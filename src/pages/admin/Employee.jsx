@@ -7,139 +7,145 @@ import Nav from '../../components/admin/Nav';
 
 function Employee() {
   const [empList, setEmpList] = useState([]);
-  const [currentEmp,setCurrentEmp]=useState({
-    id:null
-  })
+  const [currentEmp, setCurrentEmp] = useState({
+    id: null,
+  });
   console.log('empList', empList);
+
   const getEmpList = async () => {
     const result = await request.getEmpList();
+    console.log('🚀 ~ getEmpList ~ result:', result);
     setEmpList(result.data);
   };
-const handleDelete=async (empId)=>{
-    const result=await request.deleteEmp(empId);
-    const response=result.data
-      if(response.success)
-      {
-        toast.success(response.data.message, {
-            autoClose: 2000,
-          });
-          getEmpList();   
-      }
-}
+
+  const handleDelete = async (empId) => {
+    const result = await request.deleteEmp(empId);
+    const response = result.data;
+    // if (response.success) {
+    toast.success('Success', {
+      autoClose: 2000,
+    });
+    getEmpList();
+    // }
+  };
 
   useEffect(() => {
     getEmpList();
   }, []);
+
   return (
-    <div className='wrapper'>
+    <div className="wrapper">
       <Nav />
       <Menu />
-      <div className='content-wrapper'>
-        <div className='content-header'>
-          <div className='container-fluid'>
-            <div className='row mb-2'>
-              <div className='col-sm-6'></div>
-              <div className='col-sm-6'>
-                <ol className='breadcrumb float-sm-right'>
-                  <li className='breadcrumb-item'>
-                    <a href='/admin'>Home</a>
+      <div className="content-wrapper">
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6"></div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="/admin">Home</a>
                   </li>
-                  <li className='breadcrumb-item active'>
-                    Danh sách nhân viên
-                  </li>
+                  <li className="breadcrumb-item active">User List</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
         {/* Main content */}
-        <section className='content'>
-          <div className='container'>
+        <section className="content">
+          <div className="container">
             {/* Content */}
             {/* Modal */}
             <div
-              className='modal fade'    
-              id='exampleModal'
+              className="modal fade"
+              id="exampleModal"
               tabIndex={-1}
-              role='dialog'
-              aria-labelledby='exampleModalLabel'
-              aria-hidden='true'
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
             >
-              <div className='modal-dialog' role='document'>
-                <div className='modal-content'>
-                  <div className='modal-header'>
-                    <h5 className='modal-title' id='exampleModalLabel'>
-                      Xác nhận
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      Confirmation
                     </h5>
                     <button
-                      type='button'
-                      className='close'
-                      data-dismiss='modal'
-                      aria-label='Close'
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
                     >
-                      <span aria-hidden='true'>×</span>
+                      <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <div className='modal-body'>Bạn muốn xóa nhân viên này?</div>
-                  <div className='modal-footer'>
+                  <div className="modal-body">
+                    Do you want to delete this employee?
+                  </div>
+                  <div className="modal-footer">
                     <button
-                      type='button'
-                      className='btn btn-secondary'
-                      data-dismiss='modal'
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
                     >
-                      Đóng
+                      Close
                     </button>
                     <Link
-                      id='employee-delete-confirm'
-                      role='button'
-                      className='btn btn-danger text-white'
-                      to='#'
-                      data-dismiss='modal'
-                      onClick={()=>handleDelete(currentEmp.id)}
+                      id="employee-delete-confirm"
+                      role="button"
+                      className="btn btn-danger text-white"
+                      to="#"
+                      data-dismiss="modal"
+                      onClick={() => handleDelete(currentEmp._id)}
                     >
-                      Xóa
+                      Delete
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <p>Danh sách các nhân viên:</p>
-            {/* <c:foreach var="employee" items="${employees}"> */}
-            {/* </c:foreach> */}
-            <table className='table table-striped'>
+            <p>Employee List:</p>
+            <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>Tên nhân viên</th>
-                  <th>Chức vụ</th>
+                  <th>Employee Name</th>
+                  <th>Role</th>
                   <th>Email</th>
-                  <th>Hành động</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {empList.map(emp => {
+                {empList.map((emp) => {
                   return (
-                    <tr>
+                    <tr key={emp.id}>
                       <td>{emp.fullName}</td>
                       <td>
-                        <span className='badge badge-primary'>{emp.role==='EMP'?'Nhân viên':'Quản lý'}</span>
+                        <span className="badge badge-primary">
+                          {emp.role === 'expert'
+                            ? 'Expert'
+                            : emp.role === 'user'
+                            ? 'User'
+                            : 'Admin'}
+                        </span>
                       </td>
                       <td>{emp.email}</td>
                       <td>
                         <Link
-                          role='button'
-                          className='btn-primary btn mr-2'
-                          to={`/admin/employees/${emp.id}`}
+                          role="button"
+                          className="btn-primary btn mr-2"
+                          to={`/admin/users/${emp._id}`}
                         >
-                          Sửa
+                          Edit
                         </Link>
                         <button
-                          data-toggle='modal'
-                          data-target='#exampleModal'
-                        //   data-employee-id='${employee.id}'
-                          className='btn btn-danger delete-employee-action'
-                          onClick={()=>setCurrentEmp(emp)}
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          className="btn btn-danger delete-employee-action"
+                          onClick={() => setCurrentEmp(emp)}
                         >
-                          Xóa
+                          Delete
                         </button>
                       </td>
                     </tr>

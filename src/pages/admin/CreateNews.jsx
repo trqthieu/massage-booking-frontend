@@ -18,11 +18,11 @@ function CreateNews() {
   const typeList = [
     {
       id: 'NEWS',
-      name: 'Tin tức',
+      name: 'News',
     },
     {
       id: 'DISCOUNT',
-      name: 'Giảm giá',
+      name: 'Discount',
     },
     {
       id: 'VIDEO',
@@ -32,11 +32,9 @@ function CreateNews() {
 
   const [newsData, setNewsData] = useState({
     title: '',
-    movieId: null,
-    videoKey: '',
-    type: 'NEWS',
+    published: true,
+    author: '',
     content: '',
-    image: '',
   });
   console.log('newsData', newsData);
 
@@ -49,21 +47,21 @@ function CreateNews() {
     });
   }
 
-  const getMovieList = async () => {
-    const responseMovie = await request.getMovies();
-    console.log('responseMovie.data[0].id', responseMovie.data[0].id);
-    setMovieList(responseMovie.data);
-    if (!newsId) {
-      setNewsData({
-        ...newsData,
-        movieId: responseMovie.data[0].id,
-      });
-    }
-  };
+  // const getMovieList = async () => {
+  //   const responseMovie = await request.getMovies();
+  //   console.log('responseMovie.data[0].id', responseMovie.data[0].id);
+  //   setMovieList(responseMovie.data);
+  //   if (!newsId) {
+  //     setNewsData({
+  //       ...newsData,
+  //       movieId: responseMovie.data[0].id,
+  //     });
+  //   }
+  // };
 
-  useEffect(() => {
-    getMovieList();
-  }, []);
+  // useEffect(() => {
+  //   getMovieList();
+  // }, []);
 
   const handleChange = (name, value) => {
     const newNewsData = { ...newsData };
@@ -77,21 +75,21 @@ function CreateNews() {
       const updateNewsData = { id: newsId, ...newsData };
       const result = await request.updateNews(updateNewsData);
       const response = result.data;
-      if (response.success) {
-        toast.success(response.data.message, {
+      // if (response.success) {
+        toast.success('Success', {
           autoClose: 2000,
         });
-        navigate('/admin/news');
-      }
+        navigate('/admin/blogs');
+      // }
     } else {
       const result = await request.createNews(newsData);
       const response = result.data;
-      if (response.success) {
-        toast.success(response.data.message, {
+      // if (response.success) {
+        toast.success('Success', {
           autoClose: 2000,
         });
-        navigate('/admin/news');
-      }
+        navigate('/admin/blogs');
+      // }
     }
   };
 
@@ -99,16 +97,12 @@ function CreateNews() {
     const resultNews = await request.getNewsById(newsId);
     const {
       title,
-      movie_id: movieId,
-      video_key: videoKey,
-      type,
+      author,
       content,
-    } = resultNews.data[0];
+    } = resultNews.data;
     setNewsData({
       title,
-      movieId,
-      videoKey,
-      type,
+      author,
       content,
     });
   };
@@ -134,7 +128,7 @@ function CreateNews() {
                   <li className='breadcrumb-item'>
                     <a href='/admin'>Home</a>
                   </li>
-                  <li className='breadcrumb-item active'>Thêm mới tin tức</li>
+                  <li className='breadcrumb-item active'>Add New Blogs</li>
                 </ol>
               </div>
             </div>
@@ -151,22 +145,22 @@ function CreateNews() {
             >
               <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Tiêu đề</labe>
+                  <label>Title</label>
                 </div>
                 <div className='col-sm-4'>
                   <input
                     type='text'
                     className='form-control'
-                    name='name'
+                    name='title'
                     required
                     value={newsData.title}
                     onChange={e => handleChange('title', e.target.value)}
                   />
                 </div>
               </div>
-              <div className='row' style={{ marginBottom: '15px' }}>
+              {/* <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Hình ảnh</labe>
+                  <label>Image</label>
                 </div>
                 <div className='col-sm-4'>
                   <FileBase64
@@ -175,36 +169,29 @@ function CreateNews() {
                       setNewsData({ ...newsData, image: base64 });
                     }}
                   />
-                  {/* <input
-                    type='file'
-                    className='form-control-file'
-                    name='image'
-                    // value={movieData.image}
-                    onChange={e => handleChange('image', e.target.files[0])}
-                  /> */}
                 </div>
-              </div>
+              </div> */}
               <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Video</labe>
+                  <label>Author</label>
                 </div>
                 <div className='col-sm-4'>
                   <input
                     type='text'
                     className='form-control'
-                    name='name'
-                    value={newsData.videoKey}
-                    onChange={e => handleChange('videoKey', e.target.value)}
+                    name='author'
+                    value={newsData.author}
+                    onChange={e => handleChange('author', e.target.value)}
                   />
                 </div>
               </div>
-              <div className='row' style={{ marginBottom: '15px' }}>
+              {/* <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Phim</labe>
+                  <label>Movie</label>
                 </div>
                 <div className='col-sm-4'>
                   <select
-                    name='categoryId'
+                    name='movieId'
                     className='form-control'
                     value={newsData.movieId}
                     onChange={e => handleChange('movieId', e.target.value)}
@@ -218,14 +205,14 @@ function CreateNews() {
                     })}
                   </select>
                 </div>
-              </div>
-              <div className='row' style={{ marginBottom: '15px' }}>
+              </div> */}
+              {/* <div className='row' style={{ marginBottom: '15px' }}>
                 <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Loại tin tức</labe>
+                  <label>News Type</label>
                 </div>
                 <div className='col-sm-4'>
                   <select
-                    name='formatId'
+                    name='type'
                     className='form-control'
                     value={newsData.type}
                     onChange={e => handleChange('type', e.target.value)}
@@ -239,53 +226,23 @@ function CreateNews() {
                     })}
                   </select>
                 </div>
-              </div>
-
-              {/* <div className='row' style={{ marginBottom: '15px' }}>
-                <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe>Hình ảnh</labe>
-                </div>
-                <div className='col-sm-4'>
-                  <FileBase64
-                    multiple={false}
-                    onDone={({ base64 }) => {
-                      setMovieData({ ...movieData, image: base64 });
-                    }}
-                  />
-                  <input
-                    type='file'
-                    className='form-control-file'
-                    name='image'
-                    value={movieData.image}
-                    onChange={e => handleChange('image', e.target.files[0])}
-                  />
-                </div>
               </div> */}
               <div className='' style={{ marginBottom: '15px' }}>
-                <div className=''>
-                  <div>
-                    <h6>Nội dung</h6>
-                    <MarkdownEditor
-                      value={newsData.content}
-                      style={{ height: '500px' }}
-                      onChange={handleEditorChange}
-                      renderHTML={text => mdParser.render(text)}
-                    />
-                    {/* <div
-                      dangerouslySetInnerHTML={{
-                        __html: mdParser.render(newsData.content),
-                      }}
-                    /> */}
-                  </div>
+                <div>
+                  <h6>Content</h6>
+                  <MarkdownEditor
+                    value={newsData.content}
+                    style={{ height: '500px' }}
+                    onChange={handleEditorChange}
+                    renderHTML={text => mdParser.render(text)}
+                  />
                 </div>
               </div>
               <div className='row' style={{ marginBottom: '15px' }}>
-                <div className='col-sm-2' style={{ marginLeft: '150px' }}>
-                  <labe />
-                </div>
+                <div className='col-sm-2' style={{ marginLeft: '150px' }}></div>
                 <div className='col-sm-4'>
                   <button type='submit' className='btn btn-primary'>
-                    {newsId ? 'Cập nhật' : 'Thêm'}
+                    {newsId ? 'Update' : 'Add'}
                   </button>
                 </div>
               </div>

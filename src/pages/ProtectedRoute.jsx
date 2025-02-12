@@ -7,7 +7,7 @@ function ProtectedRoute({ role, children }) {
   console.log('currentUser',currentUser);
   if (!currentUser) {
    return  <Navigate to='/' />;
-  } else if (currentUser.role!=='ADMIN' && role === 'ADMIN') {
+  } else if (currentUser.role!=='admin' && role === 'admin') {
     return <Navigate to='/' />;
   }
   return children;

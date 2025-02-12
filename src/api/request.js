@@ -2,7 +2,7 @@ import axiosClient from '.';
 
 const request = {
   getMovies() {
-    return axiosClient.get('/movies');
+    return axiosClient.get('/admin/services');
   },
 
   getCategoriesByMovieId(movieId) {
@@ -27,7 +27,7 @@ const request = {
     return axiosClient.put('/movies', movie);
   },
   deleteMovie(movieId) {
-    return axiosClient.delete('/movies', {
+    return axiosClient.delete(`/admin/services/${movieId}`, {
       data: {
         id: movieId,
       },
@@ -74,26 +74,26 @@ const request = {
     return axiosClient.get(`/cinemas/rooms/${roomId}`);
   },
   getEmpList() {
-    return axiosClient.get('/employees');
+    return axiosClient.get('/admin/users');
   },
   createEmp(emp) {
-    return axiosClient.post('/employees', emp);
+    return axiosClient.post('/admin/users', emp);
   },
   getEmpById(empId) {
-    return axiosClient.get(`/employees/${empId}`);
+    return axiosClient.get(`/admin/users/${empId}`);
   },
   updateEmp(emp) {
-    return axiosClient.put('/employees', emp);
+    return axiosClient.put(`/admin/users/${emp.id}`, emp);
   },
   deleteEmp(empId) {
-    return axiosClient.delete('/employees', {
+    return axiosClient.delete(`/admin/users/${empId}`, {
       data: {
         id: empId,
       },
     });
   },
   getSchedules() {
-    return axiosClient.get('/schedules');
+    return axiosClient.get('/admin/appointments');
   },
   getSchedulesByCinema(data) {
     return axiosClient.get('/schedules', {
@@ -153,20 +153,20 @@ const request = {
     });
   },
   login(user) {
-    return axiosClient.post('/auth/login', user);
+    return axiosClient.post('/auth/local/login', user);
   },
 
   register(user) {
     return axiosClient.post('/auth/register', user);
   },
   getMyInfo() {
-    return axiosClient.get('/auth/information');
+    return axiosClient.get('/auth/profile');
   },
   confirmPassword(data) {
     return axiosClient.post('/auth/confirmPassword', data);
   },
   updateMyInfo(user) {
-    return axiosClient.put('/auth/information', user);
+    return axiosClient.put('/auth/profile', user);
   },
   getMyTickets() {
     return axiosClient.get('/auth/myTickets');
@@ -191,19 +191,19 @@ const request = {
     });
   },
   getNews() {
-    return axiosClient.get('/news');
+    return axiosClient.get('/blogs');
   },
   createNews(news) {
-    return axiosClient.post('/news', news);
+    return axiosClient.post('/blogs', news);
   },
   getNewsById(newsId) {
-    return axiosClient.get(`/news/${newsId}`);
+    return axiosClient.get(`/blogs/${newsId}`);
   },
   updateNews(news) {
-    return axiosClient.put('/news', news);
+    return axiosClient.put(`/blogs/${news.id}`, news);
   },
   deleteNews(newsId) {
-    return axiosClient.delete('/news', {
+    return axiosClient.delete(`/blogs/${newsId}`, {
       data: {
         id: newsId,
       },

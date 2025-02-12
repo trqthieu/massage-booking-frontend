@@ -11,15 +11,16 @@ function Schedule() {
   const [currentSchedule, setCurrentSchedule] = useState({
     id: null,
   });
-  console.log('scheduleList', scheduleList);
+
   const getScheduleList = async () => {
     const resultSchedule = await request.getSchedules();
+    console.log("🚀 ~ getScheduleList ~ resultSchedule:", resultSchedule);
     setScheduleList(resultSchedule.data);
-    setCurrentSchedule(resultSchedule.data[0].id);
+    setCurrentSchedule(resultSchedule.data[0]._id);
   };
 
   const handleDelete = async () => {
-    const result = await request.deleteSchedule(currentSchedule.id);
+    const result = await request.deleteSchedule(currentSchedule._id);
     const response = result.data;
     if (response.success) {
       toast.success(response.data.message, {
@@ -28,9 +29,11 @@ function Schedule() {
       getScheduleList();
     }
   };
+
   useEffect(() => {
     getScheduleList();
   }, []);
+
   return (
     <div className='wrapper'>
       <Nav />
@@ -46,7 +49,7 @@ function Schedule() {
                     <a href='/admin'>Home</a>
                   </li>
                   <li className='breadcrumb-item active'>
-                    Danh sách lịch chiếu
+                    Schedule List
                   </li>
                 </ol>
               </div>
@@ -70,7 +73,7 @@ function Schedule() {
                 <div className='modal-content'>
                   <div className='modal-header'>
                     <h5 className='modal-title' id='exampleModalLabel'>
-                      Xác nhận
+                      Confirmation
                     </h5>
                     <button
                       type='button'
@@ -81,14 +84,16 @@ function Schedule() {
                       <span aria-hidden='true'>×</span>
                     </button>
                   </div>
-                  <div className='modal-body'>Bạn muốn xóa lịch chiếu này?</div>
+                  <div className='modal-body'>
+                    Do you want to delete this schedule?
+                  </div>
                   <div className='modal-footer'>
                     <button
                       type='button'
                       className='btn btn-secondary'
                       data-dismiss='modal'
                     >
-                      Đóng
+                      Close
                     </button>
                     <Link
                       id='schedule-delete-confirm'
@@ -97,55 +102,56 @@ function Schedule() {
                       to='#'
                       onClick={handleDelete}
                     >
-                      Xóa
+                      Delete
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <p>Danh sách lịch chiếu của toàn bộ hệ thống</p>
-            {/* <c:foreach var="roomMovieSchedule" items="${roomMovieSchedules}"> */}
-            {/* </c:foreach> */}
+            <p>Schedule list of the entire system</p>
             <table className='table table-striped'>
               <thead>
                 <tr>
-                  <th>Thành phố</th>
-                  <th>Tên rạp</th>
-                  <th>Tên phòng</th>
-                  <th>Tên phim</th>
-                  <th>Thời gian</th>
-                  <th>Hành động</th>
+                  <th>User Name</th>
+                  <th>Expert Name</th>
+                  <th>Service Name</th>
+                  <th>Status</th>
+                  <th>Created At</th>
+                  <th>Booking Time</th>
+                  {/* <th>Actions</th> */}
                 </tr>
               </thead>
               <tbody>
-                {scheduleList.map(schedule => {
+                {scheduleList.map((schedule) => {
                   return (
-                    <tr key={schedule.id}>
-                      <td>{schedule.city}</td>
-                      <td>{schedule.cinema}</td>
-                      <td>{schedule.room}</td>
-                      <td>{schedule.movie}</td>
+                    <tr key={schedule._id}>
+                      <td>{schedule?.userId?.fullName}</td>
+                      <td>{schedule?.expertId?.fullName}</td>
+                      <td>{schedule?.serviceId?.name}</td>
+                      <td>{schedule.status}</td>
                       <td>
-                        {moment(schedule.premiere).format('HH:mm DD-MM-YYYY')}
+                        {moment(schedule.createdAt).format('HH:mm DD-MM-YYYY')}
                       </td>
                       <td>
-                        <Link
+                        {moment(schedule.appointmentTime).format('HH:mm DD-MM-YYYY')}
+                      </td>
+                      <td>
+                        {/* <Link
                           role='button'
                           to={`/admin/schedules/${schedule.id}`}
                           className='btn btn-primary mr-2'
                         >
-                          Cập nhật
-                        </Link>
-                        <button
+                          Update
+                        </Link> */}
+                        {/* <button
                           type='button'
                           data-toggle='modal'
                           data-target='#exampleModal'
-                          //   data-id='${roomMovieSchedule.id}'
                           className='btn btn-danger room-movie-schedule-delete-action'
                           onClick={() => setCurrentSchedule(schedule)}
                         >
-                          Xóa
-                        </button>
+                          Delete
+                        </button> */}
                       </td>
                     </tr>
                   );

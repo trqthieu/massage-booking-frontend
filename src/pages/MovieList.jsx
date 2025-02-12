@@ -52,7 +52,7 @@ function MovieList() {
                     >
                       Xem chi tiết <span className='hidden-sm'>phim</span>
                     </Link>
-                    {auth?.currentUser?.role === 'USER' && (
+                    {auth?.currentUser?.role === 'user' && (
                       <a href={`/booking/${movie.id}`} className='watchlist btn-primary'>
                         Mua vé
                       </a>

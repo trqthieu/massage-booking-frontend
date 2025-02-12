@@ -38,43 +38,43 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/amount' element={<Amount />} />
+          {/* <Route path='/register' element={<Register />} /> */}
+          {/* <Route path='/amount' element={<Amount />} /> */}
           <Route path='/information' element={<Information />} />
           <Route path='/error' element={<Error />} />
-          <Route path='/movies' element={<MovieList />} />
-          <Route path='/movies/:movieId' element={<MovieDetail />} />
-          <Route path='/admin/movies' element={<Movie />} />
-          <Route path='/admin/movies/create' element={<CreateMovie />} />
-          <Route path='/admin/movies/:movieId' element={<CreateMovie />} />
+          {/* <Route path='/movies' element={<MovieList />} />
+          <Route path='/movies/:movieId' element={<MovieDetail />} /> */}
+          <Route path='/admin/services' element={<Movie />} />
+          <Route path='/admin/services/create' element={<CreateMovie />} />
+          <Route path='/admin/services/:movieId' element={<CreateMovie />} />
           <Route path='/admin/cinemas' element={<Cinema />} />
-          <Route path='/admin/cinemas/create' element={<CreateCinema />} />
-          <Route path='/admin/cinemas/:cinemaId' element={<CreateCinema />} />
-          <Route path='/admin/employees' element={<Employee />} />
-          <Route path='/admin/employees/create' element={<CreateEmployee />} />
-          <Route path='/admin/employees/:empId' element={<CreateEmployee />} />
-          <Route path='/admin/products' element={<Product />} />
+          {/* <Route path='/admin/cinemas/create' element={<CreateCinema />} />
+          <Route path='/admin/cinemas/:cinemaId' element={<CreateCinema />} /> */}
+          <Route path='/admin/users' element={<Employee />} />
+          <Route path='/admin/users/create' element={<CreateEmployee />} />
+          <Route path='/admin/users/:empId' element={<CreateEmployee />} />
+          {/* <Route path='/admin/products' element={<Product />} />
           <Route path='/admin/products/create' element={<CreateProduct />} />
           <Route
             path='/admin/products/:productId'
             element={<CreateProduct />}
-          />
-          <Route path='/admin/schedules' element={<Schedule />} />
-          <Route path='/admin/schedules/create' element={<CreateSchedule />} />
+          /> */}
+          <Route path='/admin/bookings' element={<Schedule />} />
+          {/* <Route path='/admin/schedules/create' element={<CreateSchedule />} />
           <Route
             path='/admin/schedules/:scheduleId'
             element={<CreateSchedule />}
-          />
-          <Route path='/admin/news' element={<News />} />
-          <Route path='/admin/news/create' element={<CreateNews />} />
-          <Route path='/admin/news/:newsId' element={<CreateNews />} />
+          /> */}
+          <Route path='/admin/blogs' element={<News />} />
+          <Route path='/admin/blogs/create' element={<CreateNews />} />
+          <Route path='/admin/blogs/:newsId' element={<CreateNews />} />
           <Route path='/admin/reports' element={<Report />} />
           <Route path='/booking/:movieId' element={<Booking />} />
           <Route path='/booking-chair/:scheduleId' element={<BookingChair />} />
           <Route path='/history' element={<History />} />
           <Route path='/tickets' element={<TicketList />} />
           <Route path='/auth/forgot-password' element={<ForgotPassword />} />
-          <Route path='*' element={<Navigate to='/movies' replace />} />
+          <Route path='*' element={<Navigate to='/admin/services' replace />} />
         </Routes>
       </div>
     </BrowserRouter>

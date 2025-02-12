@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Menu() {
-  const { currentUser } = useSelector(state => state.auth);
+  const { currentUser } = useSelector((state) => state.auth);
   return (
     <aside className='main-sidebar sidebar-dark-primary elevation-4'>
       {/* Brand Logo */}
@@ -18,7 +18,7 @@ function Menu() {
       </Link>
       {/* Sidebar */}
       <div className='sidebar'>
-        {/* Sidebar user panel (optional) */}
+        {/* Sidebar user panel */}
         <div className='user-panel mt-3 pb-3 mb-3 d-flex'>
           <div className='image'>
             <img
@@ -33,8 +33,6 @@ function Menu() {
             />
           </div>
           <div className='info'>
-            {' '}
-            {/* in ra chu admin theo remote user */}
             <Link to='#' className='d-block'>
               {currentUser?.fullName}
             </Link>
@@ -48,37 +46,36 @@ function Menu() {
             role='menu'
             data-accordion='false'
           >
-            {/* Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library */}
+            {/* Movies Management */}
             <li className='nav-item has-treeview' id='menu-movie'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Quản lý phim
+                  Service Management
                   <i className='right fas fa-angle-left' />
                 </p>
-              </Link>{' '}
-              {/* trong 1 <li> co a va ul */}
+              </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/movies' className='nav-link '>
+                  <Link to='/admin/services' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Danh sách các bộ phim</p>
+                    <p>Service List</p>
                   </Link>
                 </li>
-                <li className='nav-item'>
-                  <Link to='/admin/movies/create' className='nav-link'>
+                {/* <li className='nav-item'>
+                  <Link to='/admin/services/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới bộ phim</p>
+                    <p>Add New Movie</p>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
-            <li className='nav-item has-treeview' id='menu-cinema'>
+            {/* Cinema Management */}
+            {/* <li className='nav-item has-treeview' id='menu-cinema'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Quản lý rạp chiếu phim
+                  Cinema Management
                   <i className='right fas fa-angle-left' />
                 </p>
               </Link>
@@ -86,45 +83,47 @@ function Menu() {
                 <li className='nav-item'>
                   <Link to='/admin/cinemas' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Danh sách rạp phim</p>
+                    <p>Cinema List</p>
                   </Link>
                 </li>
                 <li className='nav-item'>
                   <Link to='/admin/cinemas/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới rạp phim</p>
+                    <p>Add New Cinema</p>
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
+            {/* Schedule Management */}
             <li className='nav-item has-treeview' id='menu-schedule'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Quản lý lịch chiếu phim
+                  Booking Management
                   <i className='right fas fa-angle-left' />
                 </p>
               </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/schedules' className='nav-link'>
+                  <Link to='/admin/bookings' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Danh sách lịch chiếu</p>
+                    <p>Booking List</p>
                   </Link>
                 </li>
-                <li className='nav-item'>
+                {/* <li className='nav-item'>
                   <Link to='/admin/schedules/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới lịch chiếu</p>
+                    <p>Add New Showtime</p>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </li>
+            {/* Detailed Reports */}
             <li className='nav-item has-treeview' id='menu-report'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Báo cáo chi tiết
+                  Detailed Reports
                   <i className='right fas fa-angle-left' />
                 </p>
               </Link>
@@ -132,82 +131,83 @@ function Menu() {
                 <li className='nav-item'>
                   <Link to='/admin/reports' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Báo cáo doanh thu</p>
+                    <p>Revenue Report</p>
                   </Link>
                 </li>
               </ul>
             </li>
+            {/* Employee Management */}
             <li className='nav-item has-treeview' id='menu-employee'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Quản lý nhân viên
+                  User Management
                   <i className='right fas fa-angle-left' />
                 </p>
               </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/employees' className='nav-link'>
+                  <Link to='/admin/users' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Danh sách nhân viên</p>
+                    <p>User List</p>
+                  </Link>
+                </li>
+                {/* <li className='nav-item'>
+                  <Link to='/admin/users/create' className='nav-link'>
+                    <i className='far fa-circle nav-icon' />
+                    <p>Add New User</p>
+                  </Link>
+                </li> */}
+              </ul>
+            </li>
+            {/* News Management */}
+            <li className='nav-item has-treeview' id='menu-news'>
+              <Link to='#' className='nav-link active'>
+                <i className='nav-icon fas fa-tachometer-alt' />
+                <p>
+                  Blogs Management
+                  <i className='right fas fa-angle-left' />
+                </p>
+              </Link>
+              <ul className='nav nav-treeview'>
+                <li className='nav-item'>
+                  <Link to='/admin/blogs' className='nav-link'>
+                    <i className='far fa-circle nav-icon' />
+                    <p>Blogs List</p>
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/admin/employees/create' className='nav-link'>
+                  <Link to='/admin/blogs/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới nhân viên</p>
+                    <p>Add New Blogs</p>
                   </Link>
                 </li>
               </ul>
             </li>
-            <li className='nav-item has-treeview' id='menu-movie'>
+            {/* Product Management */}
+            {/* <li className='nav-item has-treeview' id='menu-product'>
               <Link to='#' className='nav-link active'>
                 <i className='nav-icon fas fa-tachometer-alt' />
                 <p>
-                  Quản lý tin tức
+                  Product Management
                   <i className='right fas fa-angle-left' />
                 </p>
-              </Link>{' '}
-              {/* trong 1 <li> co a va ul */}
+              </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/news' className='nav-link '>
+                  <Link to='/admin/products' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Danh sách tin tức</p>
-                  </Link>
-                </li>
-                <li className='nav-item'>
-                  <Link to='/admin/news/create' className='nav-link'>
-                    <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới tin tức</p>
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className='nav-item has-treeview' id='menu-movie'>
-              <Link to='#' className='nav-link active'>
-                <i className='nav-icon fas fa-tachometer-alt' />
-                <p>
-                  Quản lý sản phẩm
-                  <i className='right fas fa-angle-left' />
-                </p>
-              </Link>{' '}
-              {/* trong 1 <li> co a va ul */}
-              <ul className='nav nav-treeview'>
-                <li className='nav-item'>
-                  <Link to='/admin/products' className='nav-link '>
-                    <i className='far fa-circle nav-icon' />
-                    <p>Danh sách các sản phẩm</p>
+                    <p>Product List</p>
                   </Link>
                 </li>
                 <li className='nav-item'>
                   <Link to='/admin/products/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Thêm mới sản phẩm</p>
+                    <p>Add New Product</p>
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         </nav>
         {/* /.sidebar-menu */}
