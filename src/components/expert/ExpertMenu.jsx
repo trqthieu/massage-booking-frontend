@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function Menu() {
+function ExpertMenu() {
   const { currentUser } = useSelector((state) => state.auth);
   console.log('currentUser', currentUser);
   return (
@@ -32,12 +32,12 @@ function Menu() {
               alt="User"
               style={{ opacity: '.8', width: '40px', height: '40px' }}
             />
-          </div>
+          </div> */}
           <div className="info">
             <Link to="#" className="d-block">
               {currentUser?.fullName}
             </Link>
-          </div> */}
+          </div>
         </div>
         {/* Sidebar Menu */}
         <nav className="mt-2">
@@ -58,17 +58,17 @@ function Menu() {
               </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/admin/services" className="nav-link">
+                  <Link to="/expert/services" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Service List</p>
                   </Link>
                 </li>
-                {/* <li className='nav-item'>
-                  <Link to='/admin/services/create' className='nav-link'>
+                <li className='nav-item'>
+                  <Link to='/expert/services/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Add New Movie</p>
+                    <p>Add New Service</p>
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </li>
             {/* Cinema Management */}
@@ -82,13 +82,13 @@ function Menu() {
               </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/cinemas' className='nav-link'>
+                  <Link to='/expert/cinemas' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Cinema List</p>
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/admin/cinemas/create' className='nav-link'>
+                  <Link to='/expert/cinemas/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Add New Cinema</p>
                   </Link>
@@ -106,13 +106,13 @@ function Menu() {
               </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/admin/bookings" className="nav-link">
+                  <Link to="/expert/bookings" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Booking List</p>
                   </Link>
                 </li>
                 {/* <li className='nav-item'>
-                  <Link to='/admin/schedules/create' className='nav-link'>
+                  <Link to='/expert/schedules/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Add New Showtime</p>
                   </Link>
@@ -120,7 +120,7 @@ function Menu() {
               </ul>
             </li>
             {/* Detailed Reports */}
-            <li className="nav-item has-treeview" id="menu-report">
+            {/* <li className="nav-item has-treeview" id="menu-report">
               <Link to="#" className="nav-link active">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>
@@ -130,15 +130,15 @@ function Menu() {
               </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/admin/reports" className="nav-link">
+                  <Link to="/expert/reports" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Revenue Report</p>
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             {/* Employee Management */}
-            <li className="nav-item has-treeview" id="menu-employee">
+            {/* <li className="nav-item has-treeview" id="menu-employee">
               <Link to="#" className="nav-link active">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>
@@ -148,21 +148,21 @@ function Menu() {
               </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/admin/users" className="nav-link">
+                  <Link to="/expert/users" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>User List</p>
                   </Link>
                 </li>
-                {/* <li className='nav-item'>
-                  <Link to='/admin/users/create' className='nav-link'>
+                <li className='nav-item'>
+                  <Link to='/expert/users/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Add New User</p>
                   </Link>
-                </li> */}
+                </li>
               </ul>
-            </li>
+            </li> */}
             {/* News Management */}
-            <li className="nav-item has-treeview" id="menu-news">
+            {/* <li className="nav-item has-treeview" id="menu-news">
               <Link to="#" className="nav-link active">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>
@@ -172,19 +172,19 @@ function Menu() {
               </Link>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/admin/blogs" className="nav-link">
+                  <Link to="/expert/blogs" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Blogs List</p>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/admin/blogs/create" className="nav-link">
+                  <Link to="/expert/blogs/create" className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Add New Blogs</p>
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             {/* Product Management */}
             {/* <li className='nav-item has-treeview' id='menu-product'>
               <Link to='#' className='nav-link active'>
@@ -196,13 +196,13 @@ function Menu() {
               </Link>
               <ul className='nav nav-treeview'>
                 <li className='nav-item'>
-                  <Link to='/admin/products' className='nav-link'>
+                  <Link to='/expert/products' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Product List</p>
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/admin/products/create' className='nav-link'>
+                  <Link to='/expert/products/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Add New Product</p>
                   </Link>
@@ -218,4 +218,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default ExpertMenu;

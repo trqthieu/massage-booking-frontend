@@ -19,7 +19,7 @@ function Navbar() {
   return (
     <header className='header-wrapper'>
       <div className='container'>
-        <Link to='/' className='logo'>
+        <Link to='#' className='logo'>
           <img
             alt='logo'
             width='100'
@@ -42,10 +42,10 @@ function Navbar() {
           </Link>
 
           <ul id='navigation'>
-            <li>
+            {/* <li>
               <span className='sub-nav-toggle plus'></span>
               <Link to='/amount'>Trang giá</Link>
-            </li>
+            </li> */}
             {/* <li>
               <span className='sub-nav-toggle plus'></span>
               <Link to='/admin'>Quản lý</Link>
@@ -53,27 +53,33 @@ function Navbar() {
             {currentUser?.role === 'admin' && (
               <li>
                 <span className='sub-nav-toggle plus'></span>
-                <a href='/admin/movies'>Quản lý</a>
-              </li>
-            )}
-            {currentUser && (
-              <li>
-                <span className='sub-nav-toggle plus'></span>
-                <Link to='/information'>Cá nhân</Link>
-              </li>
-            )}
-            {currentUser?.role === 'user' && (
-              <li>
-                <span className='sub-nav-toggle plus'></span>
-                <Link to='/history'>Lịch sử</Link>
+                <a href='/admin/services'>Manage</a>
               </li>
             )}
             {currentUser?.role === 'expert' && (
               <li>
                 <span className='sub-nav-toggle plus'></span>
-                <Link to='/tickets'>In vé</Link>
+                <a href='/expert/services'>Manage</a>
               </li>
             )}
+            {currentUser && (
+              <li>
+                <span className='sub-nav-toggle plus'></span>
+                <Link to='/information'>Profile</Link>
+              </li>
+            )}
+            {/* {currentUser?.role === 'user' && (
+              <li>
+                <span className='sub-nav-toggle plus'></span>
+                <Link to='/history'>Lịch sử</Link>
+              </li>
+            )} */}
+            {/* {currentUser?.role === 'expert' && (
+              <li>
+                <span className='sub-nav-toggle plus'></span>
+                <Link to='/tickets'>In vé</Link>
+              </li>
+            )} */}
           </ul>
         </nav>
         {currentUser ? (
@@ -83,23 +89,23 @@ function Navbar() {
               className='btn btn--sign'
               onClick={() => dispatch(logout())}
             >
-              Đăng xuất
+              Logout
             </Link>
           </div>
         ) : (
           <>
             <div className='control-panel'>
               <Link to='/login' className='btn btn--sign'>
-                Đăng nhập
+                Login
               </Link>
             </div>
-            <div className='control-panel' style={{
+            {/* <div className='control-panel' style={{
                 right:'150px'
             }}>
               <Link to='/register' className='btn btn--sign'>
                 Đăng ký
               </Link>
-            </div>
+            </div> */}
           </>
         )}
       </div>

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import request from '../api/request';
+import jwtDecode from 'jwt-decode';
 
 export const loginAsync = createAsyncThunk(
   'auth/loginAsync',
@@ -21,7 +22,7 @@ export const getMeAsync = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
       const response = await request.getMyInfo();
-      return response?.data[0];
+      return response?.data;
     } catch (error) {
       if (!error.response) {
         throw error;
@@ -41,13 +42,13 @@ const authSlice = createSlice({
     auth: (state, action) => {
       state.currentUser = action.payload;
     },
-    clearError:(state)=>{
-        state.error=null
+    clearError: (state) => {
+      state.error = null;
     },
     logout: (state, action) => {
       //   window.location.reload();
       localStorage.clear();
-      window.location.replace('/login');
+      window.location.href = '/login';
       //   state.currentUser = null;
     },
   },
@@ -56,7 +57,13 @@ const authSlice = createSlice({
       state.error = null;
       if (action.payload) {
         localStorage.setItem('accessToken', action.payload);
-        window.location.reload();
+        const decoded = jwtDecode(action.payload);
+        if (decoded.role === 'admin') {
+          window.location.href = 'admin/services';
+        } else {
+          window.location.href = 'expert/services';
+        }
+        console.log('🚀 ~ decoded:', decoded);
       }
     },
     [loginAsync.rejected]: (state, action) => {
@@ -72,5 +79,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { auth, logout,clearError } = authSlice.actions;
+export const { auth, logout, clearError } = authSlice.actions;
 export default authSlice.reducer;

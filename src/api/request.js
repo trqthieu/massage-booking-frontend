@@ -5,6 +5,10 @@ const request = {
     return axiosClient.get('/admin/services');
   },
 
+  expertGetMovies() {
+    return axiosClient.get('/expert/services');
+  },
+
   getCategoriesByMovieId(movieId) {
     return axiosClient.get(`/movies/${movieId}/categories`);
   },
@@ -23,8 +27,14 @@ const request = {
   createMovie(movie) {
     return axiosClient.post('/movies', movie);
   },
+  expertCreateMovie(movie) {
+    return axiosClient.post('expert/services', movie);
+  },
   updateMovie(movie) {
     return axiosClient.put('/movies', movie);
+  },
+  expertUpdateService(movie) {
+    return axiosClient.put(`/expert/services/${movie.id}`, movie);
   },
   deleteMovie(movieId) {
     return axiosClient.delete(`/admin/services/${movieId}`, {
@@ -33,8 +43,18 @@ const request = {
       },
     });
   },
+  expertDeleteMovie(movieId) {
+    return axiosClient.delete(`/expert/services/${movieId}`, {
+      data: {
+        id: movieId,
+      },
+    });
+  },
   getMovieById(movieId) {
     return axiosClient.get(`/movies/${movieId}`);
+  },
+  expertDetMovieById(movieId) {
+    return axiosClient.get(`expert/services/${movieId}`);
   },
   getCinemas() {
     return axiosClient.get(`/cinemas`);
@@ -95,6 +115,9 @@ const request = {
   getSchedules() {
     return axiosClient.get('/admin/appointments');
   },
+  expertGetSchedules() {
+    return axiosClient.get('/expert/appointments');
+  },
   getSchedulesByCinema(data) {
     return axiosClient.get('/schedules', {
       params: {
@@ -119,6 +142,12 @@ const request = {
         id: scheduleId,
       },
     });
+  },
+  expertAcceptAppointment(scheduleId) {
+    return axiosClient.patch(`expert/appointments/${scheduleId}/accept`);
+  },
+  expertDenyAppointment(scheduleId) {
+    return axiosClient.patch(`expert/appointments/${scheduleId}/decline`);
   },
   getChairsByScheduleId(scheduleId) {
     return axiosClient.get(`/schedules/chairsByScheduleId/${scheduleId}`);

@@ -54,8 +54,8 @@
             head.appendChild(script);
         }
 
-        if (window.location.href.includes('/admin')) {
-            window.document.title = 'Admin | Dashboard'
+        if (window.location.href.includes('/admin') || window.location.href.includes('/expert')) {
+            window.document.title = 'MSG'
             includeCSS("https://movie-booking-sooty.vercel.app/static/plugins/fontawesome-free/css/all.min.css");
             includeCSS("https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css");
             includeCSS("https://movie-booking-sooty.vercel.app/static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css");
@@ -71,7 +71,7 @@
 
         }
         else {
-            window.document.title = 'CGV Cinema'
+            window.document.title = 'MSG'
             includeCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
             includeCSS('http://fonts.googleapis.com/css?family=Roboto:400,700');
             includeCSS('https://movie-booking-sooty.vercel.app/static/css/gozha-nav.css');

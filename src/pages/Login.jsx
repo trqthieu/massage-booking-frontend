@@ -20,7 +20,7 @@ function Login() {
     if (auth.currentUser) {
       navigate('/');
     }
-  });
+  },[]);
   useEffect(() => {
     if (auth?.error) {
       toast.error(auth.error.message, {
@@ -33,13 +33,13 @@ function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     if (!validateEmail(userData.email)) {
-      toast.error('Email không hợp lệ', {
+      toast.error('Invalid email', {
         autoClose: 2000,
       });
       return;
     }
     if (validateEmail(userData.email) && !validatePassword(userData.password)) {
-      toast.error('Mật khẩu gồm ít nhất 6 ký tự', {
+      toast.error('Min 6 chars', {
         autoClose: 2000,
       });
       return;
@@ -65,9 +65,9 @@ function Login() {
         onSubmit={handleSubmit}
       >
         <p className='login__title'>
-          ĐĂNG NHẬP
+          LOGIN
           <br />
-          <span className='login-edition'>Chào mừng bạn đến CGV Cinema</span>
+          {/* <span className='login-edition'>Chào mừng bạn đến CGV Cinema</span> */}
         </p>
 
         <div className='social social--colored'>
@@ -100,7 +100,7 @@ function Login() {
 
         <div className='login__control'>
           <button type='submit' className='btn btn-md btn--warning btn--wider'>
-            Đăng nhập
+            Login
           </button>
         </div>
       </form>
