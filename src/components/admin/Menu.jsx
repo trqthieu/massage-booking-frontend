@@ -32,12 +32,12 @@ function Menu() {
               alt="User"
               style={{ opacity: '.8', width: '40px', height: '40px' }}
             />
-          </div>
+          </div> */}
           <div className="info">
             <Link to="#" className="d-block">
               {currentUser?.fullName}
             </Link>
-          </div> */}
+          </div>
         </div>
         {/* Sidebar Menu */}
         <nav className="mt-2">
@@ -153,12 +153,12 @@ function Menu() {
                     <p>User List</p>
                   </Link>
                 </li>
-                {/* <li className='nav-item'>
+                <li className='nav-item'>
                   <Link to='/admin/users/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
                     <p>Add New User</p>
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </li>
             {/* News Management */}

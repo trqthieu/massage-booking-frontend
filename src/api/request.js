@@ -167,7 +167,7 @@ const request = {
     });
   },
   getReport(fromDate, toDate, movieId) {
-    return axiosClient.get(`/schedules/report`, {
+    return axiosClient.get(`/admin/report`, {
       params: { fromDate, toDate, movieId },
     });
   },

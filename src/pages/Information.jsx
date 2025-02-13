@@ -60,19 +60,19 @@ function Information() {
             </div>
           </div> */}
           <div className={`details-container ${isUpdate ? 'hidden' : ''}`}>
-            <h3>Thông tin tài khoản</h3>
+            <h3>Profile</h3>
             <div className="row">
               <div className="col-sm-3">
                 <ul>
                   <li>
-                    <b>Họ và tên:</b>
+                    <b>Full name:</b>
                   </li>
                   <li>
                     <b>Email:</b>
                   </li>
-                  {/* <li>
-                    <b>Ngày sinh:</b>
-                  </li> */}
+                  <li>
+                    <b>Avatar:</b>
+                  </li>
                   {/* <li>
                     <b>Giới tính</b>
                   </li> */}
@@ -85,6 +85,7 @@ function Information() {
                 <ul>
                   <li>{myInfo.fullName}</li>
                   <li>{myInfo.email}</li>
+                  <img src={myInfo.avatar} alt="" />
                   {/* <li>
                     {myInfo.dateOfBirth
                       ? moment(myInfo.dateOfBirth).format('DD-MM-YYYY')
@@ -102,7 +103,7 @@ function Information() {
               id="edit-information"
               onClick={() => setIsUpdate(true)}
             >
-              Sửa thông tin
+              Update profile
             </button>
           </div>
           <div className={`update-information ${!isUpdate ? 'hidden' : ''}`}>
@@ -113,6 +114,9 @@ function Information() {
                   <ul>
                     <li>
                       <label>Full Name:</label>
+                    </li>
+                    <li>
+                      <label>Avatar</label>
                     </li>
                     {/* <li>
                       <label>Email:</label>
@@ -141,6 +145,21 @@ function Information() {
                         }
                       />
                     </li>
+                    <div className="col-sm-4">
+                      <FileBase64
+                        multiple={false}
+                        onDone={({ base64 }) => {
+                          setMyInfo({ ...myInfo, avatar: base64 });
+                        }}
+                      />
+                      {/* <input
+                    type='file'
+                    className='form-control-file'
+                    name='image'
+                    // value={movieData.image}
+                    onChange={e => handleChange('image', e.target.files[0])}
+                  /> */}
+                    </div>
                     {/* <li>
                       <input
                         type="text"

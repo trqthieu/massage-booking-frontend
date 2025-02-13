@@ -5,6 +5,7 @@ import request from '../../api/request';
 import Menu from '../../components/admin/Menu';
 import Nav from '../../components/admin/Nav';
 import { validateEmail, validatePassword } from '../../utils/regex';
+import FileBase64 from 'react-file-base64';
 
 function CreateEmployee() {
   const navigate = useNavigate();
@@ -12,10 +13,12 @@ function CreateEmployee() {
   const { empId } = params;
   const [empData, setEmpData] = useState({
     fullName: '',
-    // address: '',
-    // email: '',
-    // password: '',
+    avatar: '',
+    role: 'user',
+    email: '',
+    password: '',
   });
+  console.log('empData', empData);
 
   const handleChange = (name, value) => {
     const newEmpData = { ...empData };
@@ -32,18 +35,18 @@ function CreateEmployee() {
       });
       return;
     }
-    // if (!validateEmail(empData.email)) {
-    //   toast.error('Invalid Email', {
-    //     autoClose: 2000,
-    //   });
-    //   return;
-    // }
-    // if (!validatePassword(empData.password)) {
-    //   toast.error('Password must be at least 6 characters', {
-    //     autoClose: 2000,
-    //   });
-    //   return;
-    // }
+    if (!validateEmail(empData.email)) {
+      toast.error('Invalid Email', {
+        autoClose: 2000,
+      });
+      return;
+    }
+    if (empData.password && !validatePassword(empData.password)) {
+      toast.error('Password must be at least 6 characters', {
+        autoClose: 2000,
+      });
+      return;
+    }
     // if (empData.address.length === 0) {
     //   toast.error('Address cannot be empty', {
     //     autoClose: 2000,
@@ -80,12 +83,13 @@ function CreateEmployee() {
 
   const getEmpInfo = async (empId) => {
     const resultEmp = await request.getEmpById(empId);
-    const { fullName, address, email, password } = resultEmp.data;
+    const { fullName, avatar, role, email, password } = resultEmp.data;
     setEmpData({
       fullName,
-      // address,
-      // email,
-      // password,
+      avatar,
+      role,
+      email,
+      password,
     });
   };
 
@@ -109,9 +113,7 @@ function CreateEmployee() {
                   <li className="breadcrumb-item">
                     <a href="/admin">Home</a>
                   </li>
-                  <li className="breadcrumb-item active">
-                    Create New Employee
-                  </li>
+                  <li className="breadcrumb-item active">Create New User</li>
                 </ol>
               </div>
             </div>
@@ -154,6 +156,73 @@ function CreateEmployee() {
                     value={empData.fullName}
                     onChange={(e) => handleChange('fullName', e.target.value)}
                   />
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <label>Email</label>
+                </div>
+                <div className="col-sm-4">
+                  <input
+                    disabled={empId ? true : false}
+                    id="email"
+                    type="text"
+                    className="form-control"
+                    path="email"
+                    value={empData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <label>Password</label>
+                </div>
+                <div className="col-sm-4">
+                  <input
+                    id="password"
+                    type="text"
+                    className="form-control"
+                    path="password"
+                    value={empData.password}
+                    onChange={(e) => handleChange('password', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <labe>Avatar</labe>
+                </div>
+                <div className="col-sm-4">
+                  <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) => {
+                      setEmpData({ ...empData, avatar: base64 });
+                    }}
+                  />
+                  {/* <input
+                    type='file'
+                    className='form-control-file'
+                    name='image'
+                    // value={movieData.image}
+                    onChange={e => handleChange('image', e.target.files[0])}
+                  /> */}
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <labe>Role</labe>
+                </div>
+                <div className="col-sm-4">
+                  <select
+                    name="categoryId"
+                    className="form-control"
+                    value={empData.role}
+                    onChange={(e) => handleChange('role', e.target.value)}
+                  >
+                    <option value={'user'}>User</option>
+                    <option value={'expert'}>Expert</option>
+                  </select>
                 </div>
               </div>
               {/* <div className="row" style={{ marginBottom: '15px' }}>

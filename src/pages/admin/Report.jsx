@@ -31,7 +31,7 @@ function Report() {
   const [data, setData] = useState({
     fromDate: null,
     toDate: null,
-    movieId: null,
+    // movieId: null,
   });
   console.log('data', data);
   const handleChange = (name, value) => {
@@ -77,7 +77,7 @@ function Report() {
                   <li className='breadcrumb-item'>
                     <a href='/admin'>Home</a>
                   </li>
-                  <li className='breadcrumb-item active'>Báo doanh thu</li>
+                  <li className='breadcrumb-item active'>Report</li>
                 </ol>
               </div>
             </div>
@@ -95,7 +95,7 @@ function Report() {
                 onSubmit={handleSubmit}
               >
                 <div className='form-group element'>
-                  <label htmlFor='start-date'>Ngày bắt đầu:</label>
+                  <label htmlFor='start-date'>Start date:</label>
                   <input
                     name='startDate'
                     type='date'
@@ -106,7 +106,7 @@ function Report() {
                   />
                 </div>
                 <div className='form-group element'>
-                  <label htmlFor='end-date'>Ngày kết thúc:</label>
+                  <label htmlFor='end-date'>End date:</label>
                   <input
                     name='endDate'
                     type='date'
@@ -116,7 +116,7 @@ function Report() {
                     onChange={e => handleChange('toDate', e.target.value)}
                   />
                 </div>
-                <div className='form-group element'>
+                {/* <div className='form-group element'>
                   <label htmlFor='category'>Phim:</label>
                   <select
                     name='category'
@@ -139,14 +139,14 @@ function Report() {
                       );
                     })}
                   </select>
-                </div>
+                </div> */}
                 <div className='form-group'>
-                  <label>Lọc báo cáo</label>
+                  <label>Get revenue chart</label>
                   <button
                     className='btn btn-primary form-control'
                     type='submit'
                   >
-                    Lọc
+                    Filter
                   </button>
                 </div>
               </form>
@@ -156,7 +156,7 @@ function Report() {
             <table className='table table-striped'>
               <thead>
                 <tr>
-                  <th>Biểu đồ doanh thu</th>
+                  <th>Revenue chart</th>
                   {/* <th>Số lượng</th> */}
                 </tr>
               </thead>
@@ -180,9 +180,15 @@ function Report() {
               <Legend />
               <Bar
                 barSize={50}
-                dataKey='total_value'
+                dataKey='totalRevenue'
                 fill='#82ca9d'
-                name='Doanh thu'
+                name='Revenue'
+              />
+              <Bar
+                barSize={30}
+                dataKey='appointmentCount'
+                fill='#007bff'
+                name='Appointment Count'
               />
               {/* <BarChart dataKey='value' fill='#82ca9d' /> */}
             </BarChart>
