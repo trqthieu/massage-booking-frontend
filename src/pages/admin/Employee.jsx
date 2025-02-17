@@ -113,6 +113,7 @@ function Employee() {
                   <th>Employee Name</th>
                   <th>Role</th>
                   <th>Email</th>
+                  <th>Address</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -131,6 +132,8 @@ function Employee() {
                         </span>
                       </td>
                       <td>{emp.email}</td>
+                      <td>{emp.address}</td>
+                      {/* <td><img src={emp.avatar} alt='' className='col-md-2'/></td> */}
                       <td>
                         <Link
                           role="button"

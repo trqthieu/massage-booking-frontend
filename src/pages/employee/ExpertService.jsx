@@ -164,6 +164,19 @@ function ExpertService() {
                         <br />
                         <label>Description:</label> {currentMovie.description}
                         <br />
+                        <br />
+                        <label>Image:</label>
+                        <br />
+                        {currentMovie.imageUrl ? (
+                          <img
+                            className="col-md-10"
+                            src={currentMovie.imageUrl}
+                            alt=""
+                          />
+                        ) : (
+                          'No image available'
+                        )}
+                        <br />
                         {/* <br /> */}
                         {/* <label>Categories:</label>{' '}
                       {currentCategories.map((c) => c.name).join(', ')}
@@ -187,13 +200,13 @@ function ExpertService() {
                       <br />
                       <br /> */}
                         <Link to={`/expert/services/${currentMovie.id}`}>
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-update-movie"
-                        >
-                          Update
-                        </button>
-                      </Link>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-update-movie"
+                          >
+                            Update
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           data-toggle="modal"

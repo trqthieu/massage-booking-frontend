@@ -17,6 +17,7 @@ function CreateEmployee() {
     role: 'user',
     email: '',
     password: '',
+    address: '',
   });
   console.log('empData', empData);
 
@@ -83,13 +84,15 @@ function CreateEmployee() {
 
   const getEmpInfo = async (empId) => {
     const resultEmp = await request.getEmpById(empId);
-    const { fullName, avatar, role, email, password } = resultEmp.data;
+    const { fullName, avatar, role, email, password, address } = resultEmp.data;
     setEmpData({
       fullName,
       avatar,
       role,
       email,
       password,
+      address
+      
     });
   };
 
@@ -186,6 +189,21 @@ function CreateEmployee() {
                     path="password"
                     value={empData.password}
                     onChange={(e) => handleChange('password', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <label>Address</label>
+                </div>
+                <div className="col-sm-4">
+                  <input
+                    id="address"
+                    type="text"
+                    className="form-control"
+                    path="address"
+                    value={empData.address}
+                    onChange={(e) => handleChange('address', e.target.value)}
                   />
                 </div>
               </div>
