@@ -24,7 +24,7 @@ function Navbar() {
             alt='logo'
             width='100'
             height='100'
-            src='/static/images/imager_2_14521_700.jpg'
+            src='/static/images/logo.jpg'
           />
         </Link>
 
