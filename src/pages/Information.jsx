@@ -85,7 +85,7 @@ function Information() {
                 <ul>
                   <li>{myInfo.fullName}</li>
                   <li>{myInfo.email}</li>
-                  <img src={myInfo.avatar} alt="" />
+                  <img className="col-md-5" src={myInfo.avatar} alt="" />
                   {/* <li>
                     {myInfo.dateOfBirth
                       ? moment(myInfo.dateOfBirth).format('DD-MM-YYYY')

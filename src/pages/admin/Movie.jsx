@@ -164,6 +164,18 @@ function Movie() {
                         <br />
                         <label>Description:</label> {currentMovie.description}
                         <br />
+                        <label>Image:</label>
+                        <br />
+                        {currentMovie.imageUrl ? (
+                          <img
+                            className="col-md-10"
+                            src={currentMovie.imageUrl}
+                            alt=""
+                          />
+                        ) : (
+                          'No image available'
+                        )}
+                        <br />
                         {/* <br /> */}
                         {/* <label>Categories:</label>{' '}
                       {currentCategories.map((c) => c.name).join(', ')}

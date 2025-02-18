@@ -18,6 +18,7 @@ function ExpertCreateService() {
     description: '',
     price: 0,
     duration: 0,
+    imageUrl: '',
   });
   console.log('movieData', movieData);
 
@@ -27,13 +28,15 @@ function ExpertCreateService() {
       name,
       description,
       price,
-      duration
+      duration,
+      imageUrl
     } = resultMovie.data;
     setMovieData({
       name,
       description,
      duration,
-     price
+     price,
+     imageUrl
     });
   };
 
@@ -75,6 +78,7 @@ function ExpertCreateService() {
         description: '',
         duration: 0,
         price: 0,
+        imageUrl:''
       });
     }
   }, [movieId]);
@@ -149,6 +153,19 @@ function ExpertCreateService() {
                     required
                     value={movieData.duration}
                     onChange={(e) => handleChange('duration', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="row" style={{ marginBottom: '15px' }}>
+                <div className="col-sm-2" style={{ marginLeft: '150px' }}>
+                  <labe>Service image</labe>
+                </div>
+                <div className="col-sm-4">
+                <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) => {
+                      setMovieData({ ...movieData, imageUrl: base64 });
+                    }}
                   />
                 </div>
               </div>
