@@ -6,11 +6,8 @@ import Nav from '../../components/admin/Nav';
 import Menu from '../../components/admin/Menu';
 import request from '../../api/request';
 import ExpertMenu from '../../components/expert/ExpertMenu';
-import { useSelector } from 'react-redux';
 
-function ExpertService() {
-  const { currentUser } = useSelector((state) => state.auth);
-  console.log('🚀 ~ ExpertService ~ currentUser:', currentUser);
+function ExpertMyService() {
   const navigate = useNavigate();
   const [movieList, setMovieList] = useState([]);
   const [currentMovie, setCurrentMovie] = useState({
@@ -18,19 +15,8 @@ function ExpertService() {
   });
   console.log('🚀 ~ Movie ~ currentMovie:', currentMovie);
 
-  // const handleDelete = async () => {
-    // const result = await request.expertDeleteMovie(currentMovie.id);
-  //   const response = result.data;
-  //   // if (response.success) {
-  //   toast.success('Success', {
-  //     autoClose: 2000,
-  //   });
-  //   getMovies();
-  //   // }
-  // };
-
-  const handleRegisterService = async () => {
-    const result = await request.expertRegisterService(currentMovie.id);
+  const handleDelete = async () => {
+    const result = await request.expertUnregisterService(currentMovie.id);
     const response = result.data;
     // if (response.success) {
     toast.success('Success', {
@@ -41,7 +27,7 @@ function ExpertService() {
   };
 
   const getMovies = async () => {
-    const result = await request.expertGetMovies();
+    const result = await request.expertGetMyMovies();
     setMovieList(result.data);
     setCurrentMovie({ ...result.data[0], id: result.data[0]._id });
   };
@@ -131,7 +117,7 @@ function ExpertService() {
                           </button>
                         </div>
                         <div className="modal-body">
-                          Do you want to register this service?
+                          Do you want to end this service?
                         </div>
                         <div className="modal-footer">
                           <button
@@ -143,11 +129,11 @@ function ExpertService() {
                           </button>
                           <button
                             type="button"
-                            className="btn btn-primary"
+                            className="btn btn-danger"
                             data-dismiss="modal"
-                            onClick={handleRegisterService}
+                            onClick={handleDelete}
                           >
-                            Register service
+                            End Service
                           </button>
                         </div>
                       </div>
@@ -227,26 +213,22 @@ function ExpertService() {
                       {currentMovie.ageLimit === 0 ? 13 : currentMovie.ageLimit}
                       <br />
                       <br /> */}
-                        {currentMovie?.expertId?.find(
-                          (item) => item._id === currentUser._id
-                        ) ? null : (
+                        {/* <Link to={`/expert/services/${currentMovie.id}`}>
                           <button
                             type="button"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
                             className="btn btn-primary btn-update-movie"
                           >
-                            Register service
+                            Update
                           </button>
-                        )}
-                        {/* <button
+                        </Link> */}
+                        <button
                           type="button"
                           data-toggle="modal"
                           data-target="#exampleModal"
                           className="btn btn-danger movie-delete-action"
                         >
                           End Service
-                        </button> */}
+                        </button>
                       </div>
                     </div>
                   )}
@@ -263,4 +245,4 @@ function ExpertService() {
   );
 }
 
-export default ExpertService;
+export default ExpertMyService;

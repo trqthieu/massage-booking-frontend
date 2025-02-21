@@ -66,7 +66,7 @@ function ExpertMenu() {
                 <li className='nav-item'>
                   <Link to='/expert/services/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Add New Service</p>
+                    <p>My Service</p>
                   </Link>
                 </li>
               </ul>

@@ -31,6 +31,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import ExpertService from './pages/employee/ExpertService';
 import ExpertCreateService from './pages/employee/ExpertCreateService';
 import ExpertBooking from './pages/employee/ExpertBooking';
+import AdminCreateService from './pages/admin/AdminCreateService';
+import ExpertMyService from './pages/employee/ExpertMyService';
 
 function App() {
   const { currentUser } = useSelector((state) => state.auth);
@@ -48,8 +50,8 @@ function App() {
           {/* <Route path='/movies' element={<MovieList />} />
           <Route path='/movies/:movieId' element={<MovieDetail />} /> */}
           <Route path="/admin/services" element={<Movie />} />
-          <Route path="/admin/services/create" element={<CreateMovie />} />
-          <Route path="/admin/services/:movieId" element={<CreateMovie />} />
+          <Route path="/admin/services/create" element={<AdminCreateService />} />
+          <Route path="/admin/services/:movieId" element={<AdminCreateService />} />
           <Route path="/admin/cinemas" element={<Cinema />} />
           {/* <Route path='/admin/cinemas/create' element={<CreateCinema />} />
           <Route path='/admin/cinemas/:cinemaId' element={<CreateCinema />} /> */}
@@ -76,7 +78,7 @@ function App() {
           <Route path="/expert/services" element={<ExpertService />} />
           <Route
             path="/expert/services/create"
-            element={<ExpertCreateService />}
+            element={<ExpertMyService />}
           />
           <Route
             path="/expert/services/:movieId"

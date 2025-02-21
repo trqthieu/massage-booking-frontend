@@ -63,12 +63,12 @@ function Menu() {
                     <p>Service List</p>
                   </Link>
                 </li>
-                {/* <li className='nav-item'>
+                <li className='nav-item'>
                   <Link to='/admin/services/create' className='nav-link'>
                     <i className='far fa-circle nav-icon' />
-                    <p>Add New Movie</p>
+                    <p>Add New Service</p>
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </li>
             {/* Cinema Management */}

@@ -9,6 +9,10 @@ const request = {
     return axiosClient.get('/expert/services');
   },
 
+  expertGetMyMovies() {
+    return axiosClient.get('/expert/my-services');
+  },
+
   getCategoriesByMovieId(movieId) {
     return axiosClient.get(`/movies/${movieId}/categories`);
   },
@@ -30,11 +34,17 @@ const request = {
   expertCreateMovie(movie) {
     return axiosClient.post('expert/services', movie);
   },
+  adminCreateMovie(movie) {
+    return axiosClient.post('admin/services', movie);
+  },
   updateMovie(movie) {
     return axiosClient.put('/movies', movie);
   },
   expertUpdateService(movie) {
     return axiosClient.put(`/expert/services/${movie.id}`, movie);
+  },
+  adminUpdateService(movie) {
+    return axiosClient.put(`/admin/services/${movie.id}`, movie);
   },
   deleteMovie(movieId) {
     return axiosClient.delete(`/admin/services/${movieId}`, {
@@ -49,6 +59,12 @@ const request = {
         id: movieId,
       },
     });
+  },
+  expertRegisterService(movieId) {
+    return axiosClient.put(`/expert/register-services/${movieId}`);
+  },
+  expertUnregisterService(movieId) {
+    return axiosClient.put(`/expert/unregister-services/${movieId}`);
   },
   getMovieById(movieId) {
     return axiosClient.get(`/movies/${movieId}`);

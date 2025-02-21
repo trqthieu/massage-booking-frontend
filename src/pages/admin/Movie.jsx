@@ -158,9 +158,22 @@ function Movie() {
                       />
                       <br /> */}
                         <br />
-                        <label>Expert:</label>{' '}
-                        {currentMovie?.expertId?.fullName}
-                        <br />
+                        <label>Expert:</label>
+                        {currentMovie?.expertId?.length ? (
+                          <>
+                            <br />
+                            {currentMovie?.expertId?.map((item) => {
+                              return (
+                                <>
+                                  {item?.fullName}
+                                  <br />
+                                </>
+                              );
+                            })}
+                          </>
+                        ) : (
+                          'No expert available'
+                        )}
                         <br />
                         <label>Description:</label> {currentMovie.description}
                         <br />
@@ -198,14 +211,14 @@ function Movie() {
                       {currentMovie.ageLimit === 0 ? 13 : currentMovie.ageLimit}
                       <br />
                       <br /> */}
-                        {/* <Link to={`/admin/movies/${currentMovie.id}`}>
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-update-movie"
-                        >
-                          Update
-                        </button>
-                      </Link> */}
+                        <Link to={`/admin/services/${currentMovie.id}`}>
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-update-movie"
+                          >
+                            Update
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           data-toggle="modal"
