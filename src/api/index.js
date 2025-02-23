@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://14.225.204.58:5000',
+  baseURL: 'https://api.abhealth.vn',
 });
 axiosClient.interceptors.request.use(
   config => {
