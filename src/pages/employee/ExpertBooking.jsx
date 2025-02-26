@@ -3,44 +3,47 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import request from '../../api/request';
-import Menu from '../../components/admin/Menu';
 import Nav from '../../components/admin/Nav';
 import ExpertMenu from '../../components/expert/ExpertMenu';
 
 function ExpertBooking() {
   const [scheduleList, setScheduleList] = useState([]);
-  const [currentSchedule, setCurrentSchedule] = useState({
-    id: null,
-  });
+  const [currentSchedule, setCurrentSchedule] = useState({ id: null });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const getScheduleList = async () => {
     const resultSchedule = await request.expertGetSchedules();
-    console.log('🚀 ~ getScheduleList ~ resultSchedule:', resultSchedule);
     setScheduleList(resultSchedule.data);
-    setCurrentSchedule(resultSchedule.data[0]._id);
+    if (resultSchedule.data.length > 0) {
+      setCurrentSchedule(resultSchedule.data[0]);
+    }
   };
 
   const handleDeny = async () => {
     const result = await request.expertDenyAppointment(currentSchedule._id);
     const response = result.data;
-    toast.success('Success', {
-      autoClose: 2000,
-    });
+    toast.success('Success', { autoClose: 2000 });
     getScheduleList();
   };
 
   const handleAccept = async () => {
     const result = await request.expertAcceptAppointment(currentSchedule._id);
     const response = result.data;
-    toast.success('Success', {
-      autoClose: 2000,
-    });
+    toast.success('Success', { autoClose: 2000 });
     getScheduleList();
   };
 
   useEffect(() => {
     getScheduleList();
   }, []);
+
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = scheduleList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="wrapper">
@@ -62,10 +65,8 @@ function ExpertBooking() {
             </div>
           </div>
         </div>
-        {/* Main content */}
         <section className="content">
           <div className="container-fluid">
-            {/* Content */}
             {/* Modal */}
             <div
               className="modal fade"
@@ -179,49 +180,56 @@ function ExpertBooking() {
                 </tr>
               </thead>
               <tbody>
-                {scheduleList.map((schedule) => {
-                  return (
-                    <tr key={schedule._id}>
-                      <td>{schedule?.userId?.fullName}</td>
-                      <td>{schedule?.expertId?.fullName}</td>
-                      <td>{schedule?.serviceId?.name}</td>
-                      <td>{schedule.status}</td>
-                      <td>
-                        {moment(schedule.createdAt).format('HH:mm DD-MM-YYYY')}
-                      </td>
-                      <td>
-                        {moment(schedule.appointmentTime).format(
-                          'HH:mm DD-MM-YYYY'
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          disabled={schedule.status !== 'pending'}
-                          type="button"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          className="btn btn-primary mr-2 room-movie-schedule-delete-action"
-                          onClick={() => setCurrentSchedule(schedule)}
-                        >
-                          Accept
-                        </button>
-                        <button
-                          disabled={schedule.status !== 'pending'}
-                          type="button"
-                          data-toggle="modal"
-                          data-target="#exampleModalDelete"
-                          className="btn btn-danger room-movie-schedule-delete-action"
-                          onClick={() => setCurrentSchedule(schedule)}
-                        >
-                          Deny
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {currentItems.map((schedule) => (
+                  <tr key={schedule._id}>
+                    <td>{schedule?.userId?.fullName}</td>
+                    <td>{schedule?.expertId?.fullName}</td>
+                    <td>{schedule?.serviceId?.name}</td>
+                    <td>{schedule.status}</td>
+                    <td>
+                      {moment(schedule.createdAt).format('HH:mm DD-MM-YYYY')}
+                    </td>
+                    <td>
+                      {moment(schedule.appointmentTime).format('HH:mm DD-MM-YYYY')}
+                    </td>
+                    <td>
+                      <button
+                        disabled={schedule.status !== 'pending'}
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        className="btn btn-primary mr-2 room-movie-schedule-delete-action"
+                        onClick={() => setCurrentSchedule(schedule)}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        disabled={schedule.status !== 'pending'}
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#exampleModalDelete"
+                        className="btn btn-danger room-movie-schedule-delete-action"
+                        onClick={() => setCurrentSchedule(schedule)}
+                      >
+                        Deny
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-            {/* End Content */}
+            {/* Pagination Controls */}
+            <nav>
+              <ul className="pagination">
+                {Array.from({ length: Math.ceil(scheduleList.length / itemsPerPage) }, (_, i) => (
+                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                    <button onClick={() => paginate(i + 1)} className="page-link">
+                      {i + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </section>
       </div>

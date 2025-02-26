@@ -2,36 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import request from '../../api/request';
-import Menu from '../../components/admin/Menu';
 import Nav from '../../components/admin/Nav';
+import Menu from '../../components/admin/Menu';
 
 function Employee() {
   const [empList, setEmpList] = useState([]);
-  const [currentEmp, setCurrentEmp] = useState({
-    id: null,
-  });
-  console.log('empList', empList);
+  const [currentEmp, setCurrentEmp] = useState({ id: null });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const getEmpList = async () => {
     const result = await request.getEmpList();
-    console.log('🚀 ~ getEmpList ~ result:', result);
     setEmpList(result.data);
   };
 
   const handleDelete = async (empId) => {
     const result = await request.deleteEmp(empId);
     const response = result.data;
-    // if (response.success) {
-    toast.success('Success', {
-      autoClose: 2000,
-    });
+    toast.success('Success', { autoClose: 2000 });
     getEmpList();
-    // }
   };
 
   useEffect(() => {
     getEmpList();
   }, []);
+
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = empList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="wrapper">
@@ -53,10 +54,8 @@ function Employee() {
             </div>
           </div>
         </div>
-        {/* Main content */}
         <section className="content">
           <div className="container">
-            {/* Content */}
             {/* Modal */}
             <div
               className="modal fade"
@@ -118,45 +117,53 @@ function Employee() {
                 </tr>
               </thead>
               <tbody>
-                {empList.map((emp) => {
-                  return (
-                    <tr key={emp.id}>
-                      <td>{emp.fullName}</td>
-                      <td>
-                        <span className="badge badge-primary">
-                          {emp.role === 'expert'
-                            ? 'Expert'
-                            : emp.role === 'user'
-                            ? 'User'
-                            : 'Admin'}
-                        </span>
-                      </td>
-                      <td>{emp.email}</td>
-                      <td>{emp.address}</td>
-                      {/* <td><img src={emp.avatar} alt='' className='col-md-2'/></td> */}
-                      <td>
-                        <Link
-                          role="button"
-                          className="btn-primary btn mr-2"
-                          to={`/admin/users/${emp._id}`}
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          className="btn btn-danger delete-employee-action"
-                          onClick={() => setCurrentEmp(emp)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {currentItems.map((emp) => (
+                  <tr key={emp._id}>
+                    <td>{emp.fullName}</td>
+                    <td>
+                      <span className="badge badge-primary">
+                        {emp.role === 'expert'
+                          ? 'Expert'
+                          : emp.role === 'user'
+                          ? 'User'
+                          : 'Admin'}
+                      </span>
+                    </td>
+                    <td>{emp.email}</td>
+                    <td>{emp.address}</td>
+                    <td>
+                      <Link
+                        role="button"
+                        className="btn-primary btn mr-2"
+                        to={`/admin/users/${emp._id}`}
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        className="btn btn-danger delete-employee-action"
+                        onClick={() => setCurrentEmp(emp)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-            {/* End Content */}
+            {/* Pagination Controls */}
+            <nav>
+              <ul className="pagination">
+                {Array.from({ length: Math.ceil(empList.length / itemsPerPage) }, (_, i) => (
+                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                    <button onClick={() => paginate(i + 1)} className="page-link">
+                      {i + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </section>
       </div>

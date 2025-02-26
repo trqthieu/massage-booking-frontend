@@ -10,56 +10,37 @@ import { useSelector } from 'react-redux';
 
 function ExpertService() {
   const { currentUser } = useSelector((state) => state.auth);
-  console.log('🚀 ~ ExpertService ~ currentUser:', currentUser);
   const navigate = useNavigate();
   const [movieList, setMovieList] = useState([]);
-  const [currentMovie, setCurrentMovie] = useState({
-    id: null,
-  });
-  console.log('🚀 ~ Movie ~ currentMovie:', currentMovie);
-
-  // const handleDelete = async () => {
-    // const result = await request.expertDeleteMovie(currentMovie.id);
-  //   const response = result.data;
-  //   // if (response.success) {
-  //   toast.success('Success', {
-  //     autoClose: 2000,
-  //   });
-  //   getMovies();
-  //   // }
-  // };
+  const [currentMovie, setCurrentMovie] = useState({ id: null });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const handleRegisterService = async () => {
     const result = await request.expertRegisterService(currentMovie.id);
     const response = result.data;
-    // if (response.success) {
-    toast.success('Success', {
-      autoClose: 2000,
-    });
+    toast.success('Success', { autoClose: 2000 });
     getMovies();
-    // }
   };
 
   const getMovies = async () => {
     const result = await request.expertGetMovies();
     setMovieList(result.data);
-    setCurrentMovie({ ...result.data[0], id: result.data[0]._id });
+    if (result.data.length > 0) {
+      setCurrentMovie({ ...result.data[0], id: result.data[0]._id });
+    }
   };
-
-  // const getCategories = async (movieId) => {
-  //   const result = await request.getCategoriesByMovieId(movieId);
-  //   setCurrentCategories(result.data);
-  // };
 
   useEffect(() => {
     getMovies();
   }, []);
 
-  // useEffect(() => {
-  //   if (currentMovie?.id) {
-  //     getCategories(currentMovie?.id);
-  //   }
-  // }, [currentMovie?.id]);
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = movieList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="wrapper">
@@ -81,109 +62,66 @@ function ExpertService() {
             </div>
           </div>
         </div>
-        {/* Main content */}
         <section className="content">
           <div className="container">
-            {/* Content */}
-            {movieList?.length ? (
+            {currentItems.length ? (
               <div className="row">
                 <div className="col-sm-3">
                   <div className="list-group movie-list">
-                    {movieList.map((movie) => {
-                      return (
-                        <Link
-                          to="#"
-                          key={movie.id}
-                          onClick={() =>
-                            setCurrentMovie({ ...movie, id: movie._id })
-                          }
-                          className="list-group-item"
-                        >
-                          {movie.name}
-                        </Link>
-                      );
-                    })}
+                    {currentItems.map((movie) => (
+                      <Link
+                        to="#"
+                        key={movie._id}
+                        onClick={() => setCurrentMovie({ ...movie, id: movie._id })}
+                        className="list-group-item"
+                      >
+                        {movie.name}
+                      </Link>
+                    ))}
                   </div>
+                  {/* Pagination Controls */}
+                  <nav>
+                    <ul className="pagination">
+                      {Array.from({ length: Math.ceil(movieList.length / itemsPerPage) }, (_, i) => (
+                        <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                          <button onClick={() => paginate(i + 1)} className="page-link">
+                            {i + 1}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
                 </div>
                 <div className="col-sm-9">
-                  {/* Modal */}
-                  <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabIndex={-1}
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
+                  <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">
-                            Confirmation
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
+                          <h5 className="modal-title" id="exampleModalLabel">Confirmation</h5>
+                          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                           </button>
                         </div>
-                        <div className="modal-body">
-                          Do you want to register this service?
-                        </div>
+                        <div className="modal-body">Do you want to register this service?</div>
                         <div className="modal-footer">
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-dismiss="modal"
-                            onClick={handleRegisterService}
-                          >
-                            Register service
-                          </button>
+                          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={handleRegisterService}>Register service</button>
                         </div>
                       </div>
                     </div>
                   </div>
                   {currentMovie && (
-                    <div
-                      className="info-movie"
-                      id={`info-movie-${currentMovie.id}`}
-                    >
-                      <div
-                        id={`detail-movie-${currentMovie.id}`}
-                        style={{ marginLeft: '150px' }}
-                      >
+                    <div className="info-movie" id={`info-movie-${currentMovie.id}`}>
+                      <div id={`detail-movie-${currentMovie.id}`} style={{ marginLeft: '150px' }}>
                         <h2>{currentMovie.name}</h2>
-                        <br />
-                        {/* <img
-                        width={120}
-                        height={160}
-                        src={currentMovie.image}
-                        alt="movie"
-                      />
-                      <br /> */}
                         <br />
                         <label>Expert:</label>
                         {currentMovie?.expertId?.length ? (
                           <>
                             <br />
-                            {currentMovie?.expertId?.map((item) => {
-                              return (
-                                <>
-                                  {item?.fullName}
-                                  <br />
-                                </>
-                              );
-                            })}
+                            {currentMovie?.expertId?.map((item) => (
+                              <>{item?.fullName}<br /></>
+                            ))}
                           </>
                         ) : (
                           'No expert available'
@@ -196,23 +134,10 @@ function ExpertService() {
                         <label>Image:</label>
                         <br />
                         {currentMovie.imageUrl ? (
-                          <img
-                            className="col-md-10"
-                            src={currentMovie.imageUrl}
-                            alt=""
-                          />
+                          <img className="col-md-10" src={currentMovie.imageUrl} alt="" />
                         ) : (
                           'No image available'
                         )}
-                        <br />
-                        {/* <br /> */}
-                        {/* <label>Categories:</label>{' '}
-                      {currentCategories.map((c) => c.name).join(', ')}
-                      <br />
-                      <br />
-                      <label>Release Date:</label>{' '}
-                      {moment(currentMovie.timeRelease).format('DD-MM-YYYY')}
-                      <br /> */}
                         <br />
                         <label>Duration:</label> {currentMovie.duration}
                         <br />
@@ -220,33 +145,11 @@ function ExpertService() {
                         <label>Price:</label> {currentMovie.price}
                         <br />
                         <br />
-                        {/* <label>Format:</label> {currentMovie.format}
-                      <br />
-                      <br />
-                      <label>Age Limit:</label>{' '}
-                      {currentMovie.ageLimit === 0 ? 13 : currentMovie.ageLimit}
-                      <br />
-                      <br /> */}
-                        {currentMovie?.expertId?.find(
-                          (item) => item._id === currentUser._id
-                        ) ? null : (
-                          <button
-                            type="button"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                            className="btn btn-primary btn-update-movie"
-                          >
+                        {currentMovie?.expertId?.find((item) => item._id === currentUser._id) ? null : (
+                          <button type="button" data-toggle="modal" data-target="#exampleModal" className="btn btn-primary btn-update-movie">
                             Register service
                           </button>
                         )}
-                        {/* <button
-                          type="button"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          className="btn btn-danger movie-delete-action"
-                        >
-                          End Service
-                        </button> */}
                       </div>
                     </div>
                   )}
@@ -255,7 +158,6 @@ function ExpertService() {
             ) : (
               'No service available'
             )}
-            {/* End Content */}
           </div>
         </section>
       </div>
