@@ -34,6 +34,19 @@ function ExpertBooking() {
     getScheduleList();
   };
 
+  const handleComplete = async (id) => {
+    const result = await request.expertCompleteAppointment(id);
+    const response = result.data;
+    toast.success('Success', { autoClose: 2000 });
+    getScheduleList();
+  };
+
+  const handleCancel = async (id) => {
+    const result = await request.expertCancelAppointment(id);
+    const response = result.data;
+    toast.success('Success', { autoClose: 2000 });
+    getScheduleList();
+  };
   useEffect(() => {
     getScheduleList();
   }, []);
@@ -190,30 +203,50 @@ function ExpertBooking() {
                       {moment(schedule.createdAt).format('HH:mm DD-MM-YYYY')}
                     </td>
                     <td>
-                      {moment(schedule.appointmentTime).format('HH:mm DD-MM-YYYY')}
+                      {moment(schedule.appointmentTime).format(
+                        'HH:mm DD-MM-YYYY'
+                      )}
                     </td>
-                    <td>
-                      <button
-                        disabled={schedule.status !== 'pending'}
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
-                        className="btn btn-primary mr-2 room-movie-schedule-delete-action"
-                        onClick={() => setCurrentSchedule(schedule)}
-                      >
-                        Accept
-                      </button>
-                      <button
-                        disabled={schedule.status !== 'pending'}
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#exampleModalDelete"
-                        className="btn btn-danger room-movie-schedule-delete-action"
-                        onClick={() => setCurrentSchedule(schedule)}
-                      >
-                        Deny
-                      </button>
-                    </td>
+                    {schedule.status === 'pending' && (
+                      <td>
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          className="btn btn-primary mr-2 room-movie-schedule-delete-action"
+                          onClick={() => setCurrentSchedule(schedule)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#exampleModalDelete"
+                          className="btn btn-danger room-movie-schedule-delete-action"
+                          onClick={() => setCurrentSchedule(schedule)}
+                        >
+                          Deny
+                        </button>
+                      </td>
+                    )}
+                    {schedule.status === 'confirmed' && (
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-primary mr-2 room-movie-schedule-delete-action"
+                          onClick={() => handleComplete(schedule._id)}
+                        >
+                          Complete
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary mr-2 room-movie-schedule-delete-action"
+                          onClick={() => handleCancel(schedule._id)}
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -221,13 +254,24 @@ function ExpertBooking() {
             {/* Pagination Controls */}
             <nav>
               <ul className="pagination">
-                {Array.from({ length: Math.ceil(scheduleList.length / itemsPerPage) }, (_, i) => (
-                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-                    <button onClick={() => paginate(i + 1)} className="page-link">
-                      {i + 1}
-                    </button>
-                  </li>
-                ))}
+                {Array.from(
+                  { length: Math.ceil(scheduleList.length / itemsPerPage) },
+                  (_, i) => (
+                    <li
+                      key={i}
+                      className={`page-item ${
+                        currentPage === i + 1 ? 'active' : ''
+                      }`}
+                    >
+                      <button
+                        onClick={() => paginate(i + 1)}
+                        className="page-link"
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  )
+                )}
               </ul>
             </nav>
           </div>

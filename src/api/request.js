@@ -131,6 +131,9 @@ const request = {
   getSchedules() {
     return axiosClient.get('/admin/appointments');
   },
+  deleteAppointment(id) {
+    return axiosClient.delete(`/admin/appointments/${id}`);
+  },
   expertGetSchedules() {
     return axiosClient.get('/expert/appointments');
   },
@@ -161,6 +164,12 @@ const request = {
   },
   expertAcceptAppointment(scheduleId) {
     return axiosClient.patch(`expert/appointments/${scheduleId}/accept`);
+  },
+  expertCompleteAppointment(scheduleId) {
+    return axiosClient.patch(`expert/appointments/${scheduleId}/complete`);
+  },
+  expertCancelAppointment(scheduleId) {
+    return axiosClient.patch(`expert/appointments/${scheduleId}/cancel`);
   },
   expertDenyAppointment(scheduleId) {
     return axiosClient.patch(`expert/appointments/${scheduleId}/decline`);
